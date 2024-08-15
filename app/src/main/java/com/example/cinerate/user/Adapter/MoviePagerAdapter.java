@@ -1,10 +1,12 @@
 package com.example.cinerate.user.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -12,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.example.cinerate.R;
 import com.example.cinerate.user.BannerMovies;
+import com.example.cinerate.user.MovieDetails;
 
 import java.util.List;
 
@@ -48,6 +51,18 @@ public class MoviePagerAdapter extends PagerAdapter {
 
         Glide.with(context).load(bannerMoviesList.get(position).getImageUrl()).into(bannerImage);
         container.addView(view);
+
+        bannerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, MovieDetails.class);
+                i.putExtra("movieId", bannerMoviesList.get(position).getId());
+                i.putExtra("movieName", bannerMoviesList.get(position).getMovieName());
+                i.putExtra("movieUrl", bannerMoviesList.get(position).getImageUrl());
+                i.putExtra("movieFile", bannerMoviesList.get(position).getFileUrl());
+                context.startActivity(i);
+            }
+        });
         return view;
     }
 }
