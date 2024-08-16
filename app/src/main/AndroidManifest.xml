@@ -20,16 +20,10 @@
             android:label="@string/title_activity_movie_details"
             android:theme="@style/Theme.CineRate" />
         <activity
-            android:name=".MovieDetails"
-            android:exported="false"
-            android:label="@string/title_activity_movie_details"
-            android:theme="@style/Theme.CineRate" />
-        <activity
-            android:name=".user.UserHomeActivity"
+            android:name=".user.HomePageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -72,7 +72,7 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
     implementation(libs.androidx.benchmark.macro)
-    implementation(libs.my.library)
+//    implementation(libs.my.library)
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.ui)
     implementation(libs.media3.exoplayer.dash)
