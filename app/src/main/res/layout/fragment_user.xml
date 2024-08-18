@@ -3,15 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".admin.fragments.UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        android:iconifiedByDefault="false"
+        android:queryHint="Tìm kiếm..."
+        android:queryBackground="@null"
+        android:background="@drawable/rounded_search_view"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/soft_blue"/>
+        app:icon="@drawable/add"
+        android:text="Tạo mới"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/soft_blue"
+        android:layout_alignParentBottom="true"
+        android:elevation="8dp"
+        />
+
 
 </RelativeLayout>

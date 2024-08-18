@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="soft_blue">#8692f7</color>
+    <color name="soft_red">#eb2d3a</color>
+    <color name="soft_green">#90ee90</color>
+    <color name="marengo">#475C6C</color>
+    <color name="soft_grey">#cccc</color>
 </resources>

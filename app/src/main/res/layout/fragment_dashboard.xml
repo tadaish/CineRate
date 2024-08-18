@@ -5,21 +5,36 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".admin.fragments.DashboardFragment"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:theme="@style/Theme.MaterialComponents.Light">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chào Admin!"
-        android:textSize="30sp"
-        android:textColor="@color/soft_blue"
-        android:padding="15dp"/>
+        android:foregroundGravity="center"/>
 
-    <include layout="@layout/counter_card" />
+        <TextView
+            android:id="@+id/greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chào Admin!"
+            android:textSize="20sp"
+            android:textColor="@color/soft_blue"
+            android:padding="15dp"/>
 
+        <include
+            android:id="@+id/counterCards"
+            layout="@layout/counter_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/greeting"
+            android:layout_marginStart="10dp"/>
 
-
-
+        <include layout="@layout/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/counterCards"
+            android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

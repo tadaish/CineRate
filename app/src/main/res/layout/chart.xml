@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/soft_blue"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lượt đánh giá"
+            android:textSize="20sp"
+            android:textColor="@color/soft_blue"
+            android:padding="8dp"/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"/>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+</RelativeLayout>
