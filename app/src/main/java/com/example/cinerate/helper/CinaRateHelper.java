@@ -60,7 +60,7 @@ public class CinaRateHelper extends SQLiteOpenHelper {
             "movie_id INTEGER, " +
             "user_id INTEGER, " +
             "rating REAL, " +
-            "created_at TEXT, " +
+            "created_at TEXT DEFAULT (DATETIME('now')), " +
             "FOREIGN KEY (movie_id) REFERENCES Movies(id) ON DELETE CASCADE, " +
             "FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE SET NULL);";
 
@@ -88,5 +88,6 @@ public class CinaRateHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Users");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Comments");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Ratings");
+        onCreate(sqLiteDatabase);
     }
 }
