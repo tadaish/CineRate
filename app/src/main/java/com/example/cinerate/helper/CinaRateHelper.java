@@ -44,6 +44,7 @@ public class CinaRateHelper extends SQLiteOpenHelper {
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "username TEXT NOT NULL UNIQUE, " +
             "password TEXT NOT NULL, " +
+            "role TEXT NOT NULL," +
             "created_at TEXT DEFAULT (DATETIME('now')) );";
 
     private static final String CREATE_TABLE_COMMENTS = "CREATE TABLE Comments (" +
