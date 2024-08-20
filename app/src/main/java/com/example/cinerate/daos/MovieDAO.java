@@ -39,21 +39,24 @@ public class MovieDAO {
         values.put("posterUrl", movie.getPosterUrl());
         values.put("mainCast", movie.getMainCast());
         values.put("averageRating", movie.getAverageRating());
-        values.put("createdAt", movie.getCreatedAt());
         values.put("trailerUrl", movie.getTrailerUrl());
         values.put("languageId", movie.getLanguageId());
         values.put("is_active", movie.getIs_active());
 
         long result = -1;
         try {
+            database.beginTransaction();
             result = database.insert("Movies", null, values);
             if (result == -1) {
                 Log.e("MovieDAO", "Có lỗi khi thêm");
             }else {
                 Log.i("MovieDAO", "Phim đã được thêm: " + result);
+                database.setTransactionSuccessful();
             }
         }catch (Exception e){
             Log.e("MovieDAO", "Lỗi", e);
+        }finally {
+            database.endTransaction();
         }
 
         return result;
@@ -209,7 +212,7 @@ public class MovieDAO {
         return movies;
     }
 
-    public long UpdateMovie(Movie movie) {
+    public long updateMovie(Movie movie) {
         ContentValues values = new ContentValues();
         values.put("title", movie.getTitle());
         values.put("description", movie.getDescription());
@@ -218,7 +221,6 @@ public class MovieDAO {
         values.put("duration", movie.getDuration());
         values.put("posterUrl", movie.getPosterUrl());
         values.put("averageRating", movie.getAverageRating());
-        values.put("created_at", movie.getCreatedAt());
         values.put("mainCast", movie.getMainCast());
         values.put("trailerUrl", movie.getTrailerUrl());
         values.put("languageId", movie.getLanguageId());
@@ -229,14 +231,18 @@ public class MovieDAO {
 
         int rowsAffected = 0;
         try {
+            database.beginTransaction();
             rowsAffected = database.update("Movies", values, whereClause, whereArgs);
             if (rowsAffected == 0) {
                 Log.w("MovieDAO", "Không có gì để cập nhật!");
             } else {
                 Log.i("MovieDAO", "Update thành công!");
+                database.setTransactionSuccessful();
             }
         } catch (Exception e) {
             Log.e("MovieDAO", "Lối", e);
+        } finally {
+            database.endTransaction();
         }
         return rowsAffected;
     }
@@ -246,14 +252,18 @@ public class MovieDAO {
         String [] whereArgs = {String.valueOf(movie_id)};
 
         try {
+            database.beginTransaction();
             int rowsDeleted = database.delete("Movies", whereClause, whereArgs);
             if (rowsDeleted == 0){
                 Log.w("MovieDAO", "Không có hàng bị xoá!");
             }else {
                 Log.i("MovieDAO", "Xoá thành công");
+                database.setTransactionSuccessful();
             }
         }catch(Exception e){
             Log.e("MovieDAO", "Lỗi: ", e);
+        } finally {
+            database.endTransaction();
         }
     }
 }
