@@ -38,7 +38,6 @@ public class MovieDAO {
         values.put("duration", movie.getDuration());
         values.put("posterUrl", movie.getPosterUrl());
         values.put("mainCast", movie.getMainCast());
-        values.put("averageRating", movie.getAverageRating());
         values.put("trailerUrl", movie.getTrailerUrl());
         values.put("languageId", movie.getLanguageId());
         values.put("is_active", movie.getIs_active());
@@ -138,9 +137,9 @@ public class MovieDAO {
         List<Movie> movies = new ArrayList<>();
 
         String query =  "SELECT m.*" +
-                        "FROM Movies m" +
-                        "INNER JOIN MovieGenre mg on mg.movie_id = m.id" +
-                        "INNER JOIN Genres g on g.id = mg.genre.id" +
+                        "FROM Movies m " +
+                        "INNER JOIN MovieGenre mg on mg.movie_id = m.id " +
+                        "INNER JOIN Genres g on g.id = mg.genre.id " +
                         "WHERE g.id = ?";
 
         String[] selectionArgs = {String.valueOf(genre_id)};
@@ -176,9 +175,9 @@ public class MovieDAO {
     public List<Movie> getMoviesByLanguage(int language_id){
         List<Movie> movies = new ArrayList<>();
 
-        String query =  "SELECT m.*" +
-                        "FROM Movies m" +
-                        "INNER JOIN Languages l ON l.id = m.language_id" +
+        String query =  "SELECT m.* " +
+                        "FROM Movies m " +
+                        "INNER JOIN Languages l ON l.id = m.language_id " +
                         "WHERE m.language_id = ?";
 
         String[] selectionArgs = {String.valueOf(language_id)};
