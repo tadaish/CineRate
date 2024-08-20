@@ -9,7 +9,7 @@ public class Movie {
     private int duration;
     private String posterUrl;
     private float averageRating;
-    private String createdAt;
+    private String created_at;
     private String mainCast;
     private String trailerUrl;
     private int languageId;
@@ -24,7 +24,7 @@ public class Movie {
         this.duration = duration;
         this.posterUrl = posterUrl;
         this.averageRating = averageRating;
-        this.createdAt = createdAt;
+        this.created_at = createdAt;
         this.mainCast = mainCast;
         this.trailerUrl = trailerUrl;
         this.languageId = languageId;
@@ -96,11 +96,11 @@ public class Movie {
     }
 
     public String getCreatedAt() {
-        return createdAt;
+        return created_at;
     }
 
     public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+        this.created_at = createdAt;
     }
 
     public String getMainCast() {
