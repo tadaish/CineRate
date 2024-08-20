@@ -265,4 +265,17 @@ public class MovieDAO {
             database.endTransaction();
         }
     }
+
+    public int getMovieCount(){
+        int count =  0;
+        String query = "SELECT COUNT(*) AS movie_count FROM Movies";
+        Cursor cursor = database.rawQuery(query,null);
+
+        if (cursor != null && cursor.moveToFirst()){
+            count = cursor.getInt(cursor.getColumnIndexOrThrow("movie_count"));
+            cursor.close();
+        }
+
+        return count;
+    }
 }

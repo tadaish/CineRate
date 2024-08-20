@@ -134,4 +134,17 @@ public class GenreDAO {
             database.endTransaction();
         }
     }
+
+    public int getGenreCount(){
+        int count =  0;
+        String query = "SELECT COUNT(*) AS genre_count FROM Genres";
+        Cursor cursor = database.rawQuery(query,null);
+
+        if (cursor != null && cursor.moveToFirst()){
+            count = cursor.getInt(cursor.getColumnIndexOrThrow("genre_count"));
+            cursor.close();
+        }
+
+        return count;
+    }
 }

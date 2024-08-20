@@ -61,8 +61,9 @@ public class RatingDAO {
 
         if (cursor != null && cursor.moveToFirst()) {
             avg_rating = cursor.getFloat(cursor.getColumnIndexOrThrow("avg_rating"));
+            cursor.close();
         }
-        
+
         return avg_rating;
     }
 

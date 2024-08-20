@@ -145,4 +145,17 @@ public class UserDAO {
             database.endTransaction();
         }
     }
+
+    public int getUserCount(){
+        int count =  0;
+        String query = "SELECT COUNT(*) AS user_count FROM Users";
+        Cursor cursor = database.rawQuery(query,null);
+
+        if (cursor != null && cursor.moveToFirst()){
+            count = cursor.getInt(cursor.getColumnIndexOrThrow("user_count"));
+            cursor.close();
+        }
+
+        return count;
+    }
 }

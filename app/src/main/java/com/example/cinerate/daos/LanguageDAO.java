@@ -134,4 +134,17 @@ public class LanguageDAO {
             database.endTransaction();
         }
     }
+
+    public int getLangCount(){
+        int count =  0;
+        String query = "SELECT COUNT(*) AS lang_count FROM Languages";
+        Cursor cursor = database.rawQuery(query,null);
+
+        if (cursor != null && cursor.moveToFirst()){
+            count = cursor.getInt(cursor.getColumnIndexOrThrow("lang_count"));
+            cursor.close();
+        }
+
+        return count;
+    }
 }
