@@ -26,5 +26,6 @@
         android:layout_alignParentEnd="true"
         android:backgroundTint="@color/soft_blue"
         android:layout_alignParentBottom="true"
-        android:elevation="8dp" />
+        android:elevation="8dp"
+        android:id="@+id/createUserBtn"/>
 </RelativeLayout>

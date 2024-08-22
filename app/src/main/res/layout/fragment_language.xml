@@ -28,6 +28,7 @@
         android:backgroundTint="@color/soft_blue"
         android:layout_alignParentBottom="true"
         android:elevation="8dp"
+        android:id="@+id/createLangBtn"
         />
 
 

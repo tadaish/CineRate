@@ -6,7 +6,6 @@ public class Movie {
     private String description;
     private int release_year;
     private String director;
-    private int duration;
     private String posterUrl;
     private float averageRating;
     private String created_at;
@@ -15,13 +14,12 @@ public class Movie {
     private int languageId;
     private String is_active;
 
-    public Movie(int id, String title, String description, int release_year, String director, int duration, String posterUrl,
+    public Movie(int id, String title, String description, int release_year, String director, String posterUrl,
                  float averageRating, String createdAt, String mainCast, String trailerUrl, int languageId, String is_active){
         this.title = title;
         this.description = description;
         this.release_year = release_year;
         this.director = director;
-        this.duration = duration;
         this.posterUrl = posterUrl;
         this.averageRating = averageRating;
         this.created_at = createdAt;
@@ -69,14 +67,6 @@ public class Movie {
 
     public void setDirector(String director) {
         this.director = director;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
     public String getPosterUrl() {

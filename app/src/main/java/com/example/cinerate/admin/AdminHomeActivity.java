@@ -22,13 +22,15 @@ import com.example.cinerate.admin.fragments.GenreFragment;
 import com.example.cinerate.admin.fragments.LanguageFragment;
 import com.example.cinerate.admin.fragments.MovieFragment;
 import com.example.cinerate.admin.fragments.UserFragment;
+import com.example.cinerate.daos.MovieDAO;
+import com.example.cinerate.helper.CinaRateHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 public class AdminHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private MaterialToolbar toolbar;
-    private TextView toolbarTitle;
+    private TextView toolbarTitle;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

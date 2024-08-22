@@ -35,7 +35,6 @@ public class MovieDAO {
         values.put("description", movie.getDescription());
         values.put("release_year", movie.getRelease_year());
         values.put("director", movie.getDirector());
-        values.put("duration", movie.getDuration());
         values.put("posterUrl", movie.getPosterUrl());
         values.put("mainCast", movie.getMainCast());
         values.put("trailerUrl", movie.getTrailerUrl());
@@ -87,7 +86,6 @@ public class MovieDAO {
                     cursor.getString(cursor.getColumnIndexOrThrow("description")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("release_year")),
                     cursor.getString(cursor.getColumnIndexOrThrow("director")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("duration")),
                     cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                     cursor.getFloat(cursor.getColumnIndexOrThrow("average_rating")),
                     cursor.getString(cursor.getColumnIndexOrThrow("created_at")),
@@ -115,7 +113,6 @@ public class MovieDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("release_year")),
                         cursor.getString(cursor.getColumnIndexOrThrow("director")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("duration")),
                         cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                         cursor.getFloat(cursor.getColumnIndexOrThrow("average_rating")),
                         cursor.getString(cursor.getColumnIndexOrThrow("created_at")),
@@ -154,7 +151,6 @@ public class MovieDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("release_year")),
                         cursor.getString(cursor.getColumnIndexOrThrow("director")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("duration")),
                         cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                         cursor.getFloat(cursor.getColumnIndexOrThrow("average_rating")),
                         cursor.getString(cursor.getColumnIndexOrThrow("created_at")),
@@ -193,7 +189,6 @@ public class MovieDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("release_year")),
                         cursor.getString(cursor.getColumnIndexOrThrow("director")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("duration")),
                         cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                         cursor.getFloat(cursor.getColumnIndexOrThrow("average_rating")),
                         cursor.getString(cursor.getColumnIndexOrThrow("created_at")),
@@ -217,7 +212,6 @@ public class MovieDAO {
         values.put("description", movie.getDescription());
         values.put("release_year", movie.getRelease_year());
         values.put("director", movie.getDirector());
-        values.put("duration", movie.getDuration());
         values.put("posterUrl", movie.getPosterUrl());
         values.put("averageRating", movie.getAverageRating());
         values.put("mainCast", movie.getMainCast());
