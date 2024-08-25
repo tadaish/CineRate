@@ -3,26 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.fragments.CreateGenreFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".admin.fragments.GenreDetailFragment"
     android:padding="30dp">
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/gen_name">
+        android:id="@+id/gen_name_lt"
+        app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="Tên thể loại"/>
+            android:hint="Tên thể loại"
+            android:id="@+id/genEditText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm"
-        android:id="@+id/addGenBtn"
-        android:layout_below="@id/gen_name"
+        android:text="Lưu"
+        android:id="@+id/genSaveBtn"
+        android:layout_below="@id/gen_name_lt"
         android:layout_marginTop="10dp"
         android:layout_alignParentEnd="true"/>
 </RelativeLayout>

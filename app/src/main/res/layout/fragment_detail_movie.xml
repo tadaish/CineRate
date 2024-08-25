@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".admin.fragments.CreateMovieFragment"
+    tools:context=".admin.fragments.MovieDetailFragment"
     android:padding="30dp"
     android:fillViewport="true">
         <RelativeLayout

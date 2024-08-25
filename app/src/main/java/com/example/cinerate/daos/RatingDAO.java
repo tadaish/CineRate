@@ -29,6 +29,7 @@ public class RatingDAO {
         ContentValues values = new ContentValues();
         values.put("movie_id", r.getMovie_id());
         values.put("user_id", r.getUser_id());
+        values.put("comment_id", r.getComment_id());
         values.put("rating", r.getRating());
 
         long result = -1;
@@ -47,6 +48,23 @@ public class RatingDAO {
             database.endTransaction();
         }
         return result;
+    }
+
+    public float getRatingByUser(int comment_id) {
+        float rating = 0;
+        String query =  "SELECT rating "+
+                        "FROM Ratings " +
+                        "INNER JOIN Comments ON Comments.id = Ratings.id " +
+                        "WHERE movie_id = ?";
+        String[] selectionArgs = {String.valueOf(comment_id)};
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            rating = cursor.getFloat(cursor.getColumnIndexOrThrow("rating"));
+            cursor.close();
+        }
+
+        return rating;
     }
 
     public float getAverageRatingByMovie(int movie_id){

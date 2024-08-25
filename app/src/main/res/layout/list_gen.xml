@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        app:cardCornerRadius="20dp"
+        app:strokeColor="@color/soft_grey"
+        app:strokeWidth="2dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thể loại"
+            android:textSize="20sp"
+            android:id="@+id/genNameTxt"
+            android:padding="16dp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/soft_green"
+                android:src="@drawable/baseline_edit_24"
+                android:contentDescription="edit"
+                android:layout_margin="10dp"
+                android:id="@+id/genEditBtn"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/soft_red"
+                android:src="@drawable/delete"
+                android:contentDescription="delete"
+                android:layout_margin="10dp"
+                android:id="@+id/genDelBtn"
+                android:layout_toEndOf="@id/genEditBtn"/>
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.fragments.CreateLanguageFragment"
+    tools:context=".admin.fragments.LanguageDetailFragment"
     android:padding="30dp">
 
     <!-- TODO: Update blank fragment layout -->

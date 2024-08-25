@@ -12,10 +12,10 @@ import com.example.cinerate.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CreateUserFragment#newInstance} factory method to
+ * Use the {@link UserDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateUserFragment extends Fragment {
+public class UserDetailFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class CreateUserFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CreateUserFragment() {
+    public UserDetailFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class CreateUserFragment extends Fragment {
      * @return A new instance of fragment CreateUserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreateUserFragment newInstance(String param1, String param2) {
-        CreateUserFragment fragment = new CreateUserFragment();
+    public static UserDetailFragment newInstance(String param1, String param2) {
+        UserDetailFragment fragment = new UserDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class CreateUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_user, container, false);
+        return inflater.inflate(R.layout.fragment_detail_user, container, false);
     }
 }

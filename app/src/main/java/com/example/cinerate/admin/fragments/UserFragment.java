@@ -37,7 +37,7 @@ public class UserFragment extends Fragment {
             createUserBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    fragmentTransaction.replace(R.id.fragment_container, new CreateUserFragment());
+                    fragmentTransaction.replace(R.id.fragment_container, new UserDetailFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }

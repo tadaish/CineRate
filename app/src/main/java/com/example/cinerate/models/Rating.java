@@ -4,6 +4,7 @@ public class Rating {
     private int id;
     private int movie_id;
     private int user_id;
+    private int comment_id;
     private float rating;
     private String created_at;
 
@@ -39,6 +40,14 @@ public class Rating {
         this.user_id = user_id;
     }
 
+    public int getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(int comment_id) {
+        this.comment_id = comment_id;
+    }
+
     public float getRating() {
         return rating;
     }
@@ -54,4 +63,5 @@ public class Rating {
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
+
 }

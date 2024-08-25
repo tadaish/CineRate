@@ -27,11 +27,11 @@ public class CinaRateHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_GENRES = "CREATE TABLE Genres (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "name TEXT NOT NULL);";
+            "name TEXT NOT NULL UNIQUE);";
 
     private static final String CREATE_TABLE_LANGUAGES = "CREATE TABLE Languages (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "name TEXT NOT NULL);";
+            "name TEXT NOT NULL UNIQUE);";
 
     private static final String CREATE_TABLE_MOVIE_GENRE = "CREATE TABLE MovieGenre (" +
             "movie_id INTEGER, " +
@@ -60,6 +60,7 @@ public class CinaRateHelper extends SQLiteOpenHelper {
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "movie_id INTEGER, " +
             "user_id INTEGER, " +
+            "comment_id INTERGER, " +
             "rating REAL, " +
             "created_at TEXT DEFAULT (DATETIME('now')), " +
             "FOREIGN KEY (movie_id) REFERENCES Movies(id) ON DELETE CASCADE, " +

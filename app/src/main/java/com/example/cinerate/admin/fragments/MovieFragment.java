@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.cinerate.R;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.search.SearchBar;
 
 
 public class MovieFragment extends Fragment {
@@ -36,7 +35,7 @@ public class MovieFragment extends Fragment {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    fragmentTransaction.replace(R.id.fragment_container, new CreateMovieFragment());
+                    fragmentTransaction.replace(R.id.fragment_container, new MovieDetailFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }

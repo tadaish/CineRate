@@ -36,7 +36,7 @@ public class LanguageFragment extends Fragment {
             createLangBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    fragmentTransaction.replace(R.id.fragment_container, new CreateGenreFragment());
+                    fragmentTransaction.replace(R.id.fragment_container, new LanguageDetailFragment());
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }

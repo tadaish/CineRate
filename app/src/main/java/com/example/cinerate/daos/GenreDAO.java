@@ -74,7 +74,7 @@ public class GenreDAO {
         long result = -1;
         try {
             database.beginTransaction();
-            result = database.insert("Movies", null, values);
+            result = database.insert("Genres", null, values);
             if (result == -1) {
                 Log.e("GenreDAO", "Có lỗi khi thêm");
             }else {
@@ -97,7 +97,7 @@ public class GenreDAO {
         String whereCls = "id = ?";
         String[] whereArgs = {String.valueOf(genre.getId())};
 
-        int rowsAffected = 0;
+        long rowsAffected = 0;
         try {
             database.beginTransaction();
             rowsAffected = database.update("Genres", values, whereCls, whereArgs);
