@@ -16,14 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:id="@+id/langNameEditTxt"
             android:hint="Tên ngôn ngữ"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm"
-        android:id="@+id/addLangBtn"
+        android:id="@+id/saveLangBtn"
         android:layout_below="@id/lang_name"
         android:layout_marginTop="10dp"
         android:layout_alignParentEnd="true"/>

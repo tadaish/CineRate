@@ -28,4 +28,12 @@
         android:layout_alignParentBottom="true"
         android:elevation="8dp"
         android:id="@+id/createUserBtn"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchView"
+        android:padding="16dp"
+        android:id="@+id/userRecyclerView"/>
+
 </RelativeLayout>

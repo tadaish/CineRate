@@ -64,6 +64,7 @@ public class GenreDetailFragment extends Fragment {
                             if (rowsAffected != 0) {
                                 Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
                                 GenreFragment.adapter.notifyItemChanged(itemPosition);
+                                GenreFragment.dao.close();
                             } else {
                                 Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
                             }
@@ -73,6 +74,7 @@ public class GenreDetailFragment extends Fragment {
                             if (result != -1) {
                                 Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
                                 GenreFragment.adapter.notifyItemInserted(GenreFragment.genreList.size() -1);
+                                GenreFragment.dao.close();
                             } else {
                                 Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                             }

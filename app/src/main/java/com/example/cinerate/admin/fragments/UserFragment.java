@@ -7,16 +7,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.adapters.UserAdapter;
+import com.example.cinerate.daos.UserDAO;
+import com.example.cinerate.models.User;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.util.List;
 
 
 public class UserFragment extends Fragment {
+    public static FragmentManager fragmentManager;
+    public static List<User> userList;
+    public static UserDAO dao;
+    public static UserAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +43,14 @@ public class UserFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ExtendedFloatingActionButton createUserBtn = view.findViewById(R.id.createUserBtn);
+        dao = new UserDAO(this.getContext());
+        dao.open();
+
+        userList = dao.getAllUsers();
+        adapter = new UserAdapter(userList);
+        RecyclerView recyclerView = view.findViewById(R.id.userRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setAdapter(adapter);
 
         if (createUserBtn != null) {
             createUserBtn.setOnClickListener(new View.OnClickListener() {

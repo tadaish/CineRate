@@ -30,7 +30,7 @@ public class LanguageDAO {
 
     public List<Language> getAllLanguages() {
         List<Language> langs = new ArrayList<>();
-        String query = "SELECT * FROM Genres";
+        String query = "SELECT * FROM Languages";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor != null && cursor.moveToFirst()) {

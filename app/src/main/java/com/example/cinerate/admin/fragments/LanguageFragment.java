@@ -7,16 +7,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.adapters.GenreAdapter;
+import com.example.cinerate.admin.adapters.LanguageAdapter;
+import com.example.cinerate.daos.LanguageDAO;
+import com.example.cinerate.models.Language;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-public class LanguageFragment extends Fragment {
+import java.util.List;
 
+public class LanguageFragment extends Fragment {
+    public static FragmentManager fragmentManager;
+    public static List<Language> languageList;
+    public static LanguageDAO dao;
+    public static LanguageAdapter langAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,8 +40,21 @@ public class LanguageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ExtendedFloatingActionButton createLangBtn = view.findViewById(R.id.createLangBtn);
-        FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        dao = new LanguageDAO(this.getContext());
+        dao.open();
+
+//        dao.addLanguage(new Language("Tiếng Việt"));
+//        dao.addLanguage(new Language("Tiếng Anh"));
+//        dao.addLanguage(new Language("Tiếng Nhật"));
+
+        languageList = dao.getAllLanguages();
+        langAdapter = new LanguageAdapter(languageList);
+        RecyclerView recyclerView = view.findViewById(R.id.langListView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setAdapter(langAdapter);
 
         if (createLangBtn != null) {
             createLangBtn.setOnClickListener(new View.OnClickListener() {
