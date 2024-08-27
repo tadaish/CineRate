@@ -51,6 +51,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 bundle.putInt("itemId", u.getId());
                 bundle.putInt("itemPosition", itemPosition);
                 bundle.putString("itemPassword", u.getPassword());
+                bundle.putBoolean("isEditMode", true);
                 userDetailFragment.setArguments(bundle);
 
                 fragmentTransaction.replace(R.id.fragment_container, userDetailFragment).

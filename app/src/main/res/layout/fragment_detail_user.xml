@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tên tài khoản"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:id="@+id/edtTxtUsername"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -31,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mật khẩu"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:id="@+id/edtTxtPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -44,17 +46,17 @@
         app:endIconMode="dropdown_menu">
         <AutoCompleteTextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:hint="Vai trò"
-            android:paddingLeft="20dp" />
+            android:paddingLeft="20dp"
+            android:id="@+id/dropdownUserRole"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addUserBtn"
+        android:id="@+id/saveUserBtn"
         android:layout_below="@id/user_role"
-        android:layout_alignParentEnd="true"
-        android:text="Thêm"/>
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

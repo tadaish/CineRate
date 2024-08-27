@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
 import com.example.cinerate.models.User;
+import com.example.cinerate.utils.PasswordUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,7 @@ public class UserDAO {
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("username")),
                         cursor.getString(cursor.getColumnIndexOrThrow("password")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("role")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("created_at"))
+                        cursor.getString(cursor.getColumnIndexOrThrow("role"))
                 );
                 users.add(u);
             } while (cursor.moveToNext());
@@ -50,9 +50,9 @@ public class UserDAO {
         return users;
     }
 
-    public User getGenreById(int user_id) {
+    public User getUserId(int user_id) {
         User user = null;
-        String query  = "SELECT * FROM Genres WHERE id = ?";
+        String query  = "SELECT * FROM Users WHERE id = ?";
         String[] selectionArgs = {String.valueOf(user_id)};
         Cursor cursor = database.rawQuery(query, selectionArgs);
 
@@ -62,8 +62,7 @@ public class UserDAO {
                         cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("username")),
                         cursor.getString(cursor.getColumnIndexOrThrow("password")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("role")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("created_at"))
+                        cursor.getString(cursor.getColumnIndexOrThrow("role"))
                 );
             } while (cursor.moveToNext());
             cursor.close();
@@ -75,8 +74,9 @@ public class UserDAO {
     public long addUser(User user) {
         ContentValues values = new ContentValues();
 
+        String hashedPassword = PasswordUtils.hashPassword(user.getPassword());
         values.put("username", user.getUsername());
-        values.put("password", user.getPassword());
+        values.put("password", hashedPassword);
         values.put("role", user.getRole());
 
         long result = -1;
@@ -101,7 +101,7 @@ public class UserDAO {
     public long updateUser(User user){
         ContentValues values = new ContentValues();
         values.put("username", user.getUsername());
-        values.put("password", user.getPassword());
+        values.put("password", PasswordUtils.hashPassword(user.getPassword()));
         values.put("role", user.getRole());
 
         String whereCls = "id = ?";
