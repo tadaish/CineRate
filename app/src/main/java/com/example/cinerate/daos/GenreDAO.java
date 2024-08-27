@@ -147,4 +147,24 @@ public class GenreDAO {
 
         return count;
     }
+
+    public List<String> getGenreNameByMovieId(int movie_id){
+        List<String> genreNames = new ArrayList<>();
+        String query = "SELECT name " +
+                "FROM Genres "+
+                "INNER JOIN MovieGenre Genres.id = MovieGenre.genre_id "+
+                "WHERE MovieGenre.movie_id = ?";
+        String[] whereArgs = {String.valueOf(movie_id)};
+
+        Cursor cursor =  database.rawQuery(query, whereArgs);
+
+        if(cursor != null && cursor.moveToFirst()){
+            do{
+                String genreName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                genreNames.add(genreName);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
+        return genreNames;
+    }
 }

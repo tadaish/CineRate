@@ -36,7 +36,8 @@
         android:layout_below="@+id/searchView"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:id="@+id/filterView">
         <AutoCompleteTextView
             android:id="@+id/gen_dropdown"
             android:drawableEnd="@drawable/arrow_drop_down"
@@ -57,4 +58,9 @@
             android:drawableEnd="@drawable/arrow_drop_down"/>
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/filterView"
+        android:id="@+id/movieListView"/>
 </RelativeLayout>

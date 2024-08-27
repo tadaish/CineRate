@@ -14,19 +14,15 @@ public class Movie {
     private int languageId;
     private String is_active;
 
-    public Movie(int id, String title, String description, int release_year, String director, String posterUrl,
-                 float averageRating, String createdAt, String mainCast, String trailerUrl, int languageId, String is_active){
+    public Movie( String title, String description, int release_year, String director, String posterUrl, String mainCast, String trailerUrl, int languageId){
         this.title = title;
         this.description = description;
         this.release_year = release_year;
         this.director = director;
         this.posterUrl = posterUrl;
-        this.averageRating = averageRating;
-        this.created_at = createdAt;
         this.mainCast = mainCast;
         this.trailerUrl = trailerUrl;
         this.languageId = languageId;
-        this.is_active = is_active;
     }
 
     public int getId() {
