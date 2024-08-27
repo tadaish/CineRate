@@ -20,7 +20,7 @@
             android:label="@string/title_activity_movie_details"
             android:theme="@style/Theme.CineRate" />
         <activity
-            android:name=".admin.AdminHomeActivity"
+            android:name=".user.HomePageActivity"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true" >
             <intent-filter>
