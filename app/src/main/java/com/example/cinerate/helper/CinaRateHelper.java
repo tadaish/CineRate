@@ -3,6 +3,7 @@ package com.example.cinerate.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class CinaRateHelper extends SQLiteOpenHelper {
 
@@ -73,6 +74,7 @@ public class CinaRateHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TABLE_MOVIES);
+        Log.d("CinaRateHelper", "Table Movies created.");
         sqLiteDatabase.execSQL(CREATE_TABLE_LANGUAGES);
         sqLiteDatabase.execSQL(CREATE_TABLE_GENRES);
         sqLiteDatabase.execSQL(CREATE_TABLE_MOVIE_GENRE);

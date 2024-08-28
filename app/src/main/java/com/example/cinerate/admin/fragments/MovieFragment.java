@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,10 @@ public class MovieFragment extends Fragment {
         dao = new MovieDAO(this.getContext());
         dao.open();
 
+        int movieCount = dao.getMovieCount();
+        Log.d("MovieDAO", "Số lượng phim trong bảng Movies: " + movieCount);
+        if (movieCount == 0) {
+
         dao.addMovie(new Movie("Avengers: Endgame",
                 "Sau những sự kiện tàn khốc trong Avengers: Infinity War, vũ trụ bị hủy hoại do những nỗ lực của Thanos. Với sự giúp đỡ của các đồng minh còn lại, Avengers phải tập hợp lại một lần nữa để đảo ngược hành động của Thanos và khôi phục trật tự cho vũ trụ vĩnh viễn, bất kể hậu quả có thể xảy ra.",
                 2019, "Joe Russo, Anthony Russo",
@@ -62,6 +67,9 @@ public class MovieFragment extends Fragment {
                 "https://image.tmdb.org/t/p/w342/2hFvxCCWrTmCYwfy7yum0GKRi3Y.jpg", "Adrien Brody, Thomas Kretschmann", "https://youtu.be/u_jE7-6Uv7E?si=TzvPo-21wgZvzLXP",
                 2));
 
+        } else {
+            Log.d("MovieDAO", "Dữ liệu đã tồn tại, không thêm dữ liệu mẫu.");
+        }
         if (addBtn != null) {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
