@@ -7,23 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Rating;
 
 public class RatingDAO {
     private SQLiteDatabase database;
-    private CinaRateHelper dbhelper;
 
     public RatingDAO (Context context){
-        dbhelper = new CinaRateHelper(context);
+        database = DatabaseManager.getInstance(context).open();
     }
 
-    public void open() {
-        database = dbhelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbhelper.close();
-    }
 
     public long addRating(Rating r) {
         ContentValues values = new ContentValues();

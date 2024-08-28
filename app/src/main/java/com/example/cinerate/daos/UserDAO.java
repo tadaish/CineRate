@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.User;
 import com.example.cinerate.utils.PasswordUtils;
 
@@ -15,19 +16,11 @@ import java.util.List;
 
 public class UserDAO {
     private SQLiteDatabase database;
-    private CinaRateHelper dbhelper;
 
     public UserDAO (Context context){
-        dbhelper = new CinaRateHelper(context);
+        database = DatabaseManager.getInstance(context).open();
     }
 
-    public void open() {
-        database = dbhelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbhelper.close();
-    }
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();

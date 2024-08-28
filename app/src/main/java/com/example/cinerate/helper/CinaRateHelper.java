@@ -11,19 +11,19 @@ public class CinaRateHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_MOVIES = "CREATE TABLE Movies (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "title TEXT NOT NULL, " +
+            "title TEXT NOT NULL UNIQUE, " +
             "description TEXT, " +
             "release_year INTEGER, " +
             "director TEXT, " +
             "duration INTEGER," +
+            "genre_id INTERGER, " +
             "language_id INTEGER, " +
             "poster_url TEXT, " +
-            "average_rating REAL, " +
             "created_at TEXT DEFAULT (DATETIME('now')), " +
             "main_cast TEXT, " +
             "trailer_url TEXT, " +
-            "is_active TEXT, " +
-            "FOREIGN KEY (language_id) REFERENCES Languages(id) ON DELETE SET NULL);";
+            "FOREIGN KEY (language_id) REFERENCES Languages(id) ON DELETE SET NULL, " +
+            "FOREIGN KEY (genre_id) REFERENCES Genres(id) ON DELETE SET NULL)";
 
     private static final String CREATE_TABLE_GENRES = "CREATE TABLE Genres (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -33,12 +33,6 @@ public class CinaRateHelper extends SQLiteOpenHelper {
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "name TEXT NOT NULL UNIQUE);";
 
-    private static final String CREATE_TABLE_MOVIE_GENRE = "CREATE TABLE MovieGenre (" +
-            "movie_id INTEGER, " +
-            "genre_id INTEGER, " +
-            "PRIMARY KEY (movie_id, genre_id), " +
-            "FOREIGN KEY (movie_id) REFERENCES Movies(id) ON DELETE CASCADE," +
-            "FOREIGN KEY (genre_id) REFERENCES Genres(id) ON DELETE CASCADE);";
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE Users (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -75,7 +69,6 @@ public class CinaRateHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TABLE_MOVIES);
         sqLiteDatabase.execSQL(CREATE_TABLE_LANGUAGES);
         sqLiteDatabase.execSQL(CREATE_TABLE_GENRES);
-        sqLiteDatabase.execSQL(CREATE_TABLE_MOVIE_GENRE);
         sqLiteDatabase.execSQL(CREATE_TABLE_USERS);
         sqLiteDatabase.execSQL(CREATE_TABLE_COMMENTS);
         sqLiteDatabase.execSQL(CREATE_TABLE_RATINGS);
@@ -86,7 +79,6 @@ public class CinaRateHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Movies");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Genres");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Languages");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS MovieGenre");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Users");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Comments");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Ratings");

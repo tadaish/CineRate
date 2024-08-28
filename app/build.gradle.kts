@@ -78,5 +78,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
 
 }

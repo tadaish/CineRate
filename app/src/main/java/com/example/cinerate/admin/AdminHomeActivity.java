@@ -22,8 +22,15 @@ import com.example.cinerate.admin.fragments.GenreFragment;
 import com.example.cinerate.admin.fragments.LanguageFragment;
 import com.example.cinerate.admin.fragments.MovieFragment;
 import com.example.cinerate.admin.fragments.UserFragment;
+import com.example.cinerate.daos.CommentDAO;
+import com.example.cinerate.daos.GenreDAO;
+import com.example.cinerate.daos.LanguageDAO;
 import com.example.cinerate.daos.MovieDAO;
+import com.example.cinerate.daos.RatingDAO;
+import com.example.cinerate.daos.UserDAO;
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
+import com.example.cinerate.models.Rating;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,6 +38,12 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
     private DrawerLayout drawerLayout;
     private MaterialToolbar toolbar;
     private TextView toolbarTitle;;
+    public static MovieDAO movieDAO;
+    public static  GenreDAO genreDAO;
+    public static  LanguageDAO languageDAO;
+    public static  UserDAO userDAO;
+    public static  CommentDAO commentDAO;
+    public static  RatingDAO ratingDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +69,17 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_dashboard);
         }
+
+        //mo CSDL
+        DatabaseManager.getInstance(this).open();
+
+        //khoi tao cac lop Data-Acess-Object
+        movieDAO = new MovieDAO(this);
+        genreDAO = new GenreDAO(this);
+        languageDAO = new LanguageDAO(this);
+        commentDAO = new CommentDAO(this);
+        ratingDAO = new RatingDAO(this);
+
     }
 
     @Override
@@ -97,4 +121,12 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DatabaseManager.getInstance(this).close();
+    }
+
+
 }

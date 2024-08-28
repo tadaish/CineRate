@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.models.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -80,21 +81,19 @@ public class UserDetailFragment extends Fragment {
                         String newRole = dropdownUserRole.getText().toString();
                         User u = new User(itemId, newUsername, newPassword, newRole);
 
-                        long rowsAffected = UserFragment.dao.updateUser(u);
+                        long rowsAffected = AdminHomeActivity.userDAO.updateUser(u);
                         if(rowsAffected !=0){
                             Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
                             UserFragment.adapter.notifyItemChanged(itemPosition);
-                            UserFragment.dao.close();
                         }else {
                             Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
                         }
                     }else {
                         User u = new User(username, password, role);
-                        long result = UserFragment.dao.addUser(u);
+                        long result = AdminHomeActivity.userDAO.addUser(u);
                         if(result !=-1){
                             Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT);
                             UserFragment.adapter.notifyItemInserted(UserFragment.userList.size() -1);
-                            UserFragment.dao.close();
                         }else {
                             Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
                         }

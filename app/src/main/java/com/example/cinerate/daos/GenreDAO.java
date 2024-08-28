@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Genre;
 
 import java.util.ArrayList;
@@ -14,19 +15,11 @@ import java.util.List;
 
 public class GenreDAO {
     private SQLiteDatabase database;
-    private CinaRateHelper dbhelper;
 
     public GenreDAO (Context context){
-        dbhelper = new CinaRateHelper(context);
+        database = DatabaseManager.getInstance(context).open();
     }
 
-    public void open() {
-        database = dbhelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbhelper.close();
-    }
 
     public List<Genre> getAllGenres() {
         List<Genre> genres = new ArrayList<>();
@@ -148,23 +141,4 @@ public class GenreDAO {
         return count;
     }
 
-    public List<String> getGenreNameByMovieId(int movie_id){
-        List<String> genreNames = new ArrayList<>();
-        String query = "SELECT name " +
-                "FROM Genres "+
-                "INNER JOIN MovieGenre Genres.id = MovieGenre.genre_id "+
-                "WHERE MovieGenre.movie_id = ?";
-        String[] whereArgs = {String.valueOf(movie_id)};
-
-        Cursor cursor =  database.rawQuery(query, whereArgs);
-
-        if(cursor != null && cursor.moveToFirst()){
-            do{
-                String genreName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                genreNames.add(genreName);
-            }while(cursor.moveToNext());
-            cursor.close();
-        }
-        return genreNames;
-    }
 }

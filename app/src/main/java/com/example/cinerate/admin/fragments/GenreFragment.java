@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.adapters.GenreAdapter;
 import com.example.cinerate.daos.GenreDAO;
 import com.example.cinerate.models.Genre;
@@ -27,7 +28,6 @@ import java.util.List;
 public class GenreFragment extends Fragment {
     public static GenreAdapter adapter;
     public static FragmentManager fragmentManager;
-    public static GenreDAO dao;
     public static List<Genre> genreList;
 
     @Override
@@ -44,8 +44,6 @@ public class GenreFragment extends Fragment {
 
         ExtendedFloatingActionButton createGenBtn = view.findViewById(R.id.createGenBtn);
 
-        dao = new GenreDAO(this.getContext());
-        dao.open();
 
 //        dao.addGenre(new Genre("Kinh dị"));
 //        dao.addGenre(new Genre("Hành động"));
@@ -55,7 +53,7 @@ public class GenreFragment extends Fragment {
 //        dao.addGenre(new Genre("Lãng mạn"));
 //        dao.addGenre(new Genre("Chiến tranh"));
 
-        genreList = dao.getAllGenres();
+        genreList = AdminHomeActivity.genreDAO.getAllGenres();
         adapter = new GenreAdapter(genreList);
         RecyclerView recyclerView = view.findViewById(R.id.genList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
