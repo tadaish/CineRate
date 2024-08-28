@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cinerate.R;
+import com.example.cinerate.models.Movie;
 import com.example.cinerate.user.AllCategory;
 import com.example.cinerate.user.CategoryItem;
 
@@ -58,8 +59,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         }
     }
 
-    private void setItemRecycler(RecyclerView recyclerView, List<CategoryItem> categoryItemList) {
-        ItemRecyclerAdapter itemRecyclerAdapter = new ItemRecyclerAdapter(context, categoryItemList);
+    private void setItemRecycler(RecyclerView recyclerView, List<Movie> moviesList) {
+        ItemRecyclerAdapter itemRecyclerAdapter = new ItemRecyclerAdapter(context, moviesList);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, recyclerView.HORIZONTAL, false));
         recyclerView.setAdapter(itemRecyclerAdapter);
 
