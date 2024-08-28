@@ -20,4 +20,8 @@ public class PasswordUtils {
             throw new RuntimeException(e);
         }
     }
+    public static boolean verifyPassword(String providedPassword, String storedHashedPassword) {
+        String hashedProvidedPassword = hashPassword(providedPassword);
+        return hashedProvidedPassword.equals(storedHashedPassword);
+    }
 }

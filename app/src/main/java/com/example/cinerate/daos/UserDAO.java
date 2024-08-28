@@ -43,6 +43,23 @@ public class UserDAO {
 
         return users;
     }
+    public User getUserByUsername(String username) {
+        User user = null;
+        String query = "SELECT * FROM Users WHERE username = ?";
+        String[] selectionArgs = { username };
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            user = new User(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("username")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("password")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("role"))
+            );
+            cursor.close();
+        }
+        return user;
+    }
 
     public User getUserId(int user_id) {
         User user = null;

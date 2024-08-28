@@ -1,18 +1,31 @@
 package com.example.cinerate.user;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import com.example.cinerate.R;
+import com.example.cinerate.daos.CommentDAO;
+import com.example.cinerate.daos.GenreDAO;
+import com.example.cinerate.daos.LanguageDAO;
 import com.example.cinerate.daos.MovieDAO;
+import com.example.cinerate.daos.RatingDAO;
+import com.example.cinerate.daos.UserDAO;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Movie;
+import com.example.cinerate.models.User;
 import com.example.cinerate.user.Adapter.MainRecyclerAdapter;
 import com.example.cinerate.user.Adapter.MoviePagerAdapter;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -25,19 +38,108 @@ public class HomePageActivity extends AppCompatActivity {
     MoviePagerAdapter moviePagerAdapter;
     TabLayout indicatorTab, categoryTab;
     ViewPager viewPager;
+    Button loginButton;
+    Button logoutButton;
+    SharedPreferences sharedPreferences;
+    TextView welcomeTextView;
+
     List<Movie> homeBannerList;
     List<Movie> tvShowBannerList;
     List<Movie> movieBannerList;
     List<Movie> animeBannerList;
+    public static List<Movie> movieList;
+
+    public static MovieDAO movieDAO;
+    public static GenreDAO genreDAO;
+    public static LanguageDAO languageDAO;
+    public static UserDAO userDAO;
+    public static CommentDAO commentDAO;
+    public static RatingDAO ratingDAO;
 
     MainRecyclerAdapter mainRecyclerAdapter;
     RecyclerView mainRecycler;
     List<AllCategory> allCategoryList;
 
+    private int getLoggedInUserId() {
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("LoggedInUserId", -1); // -1 nếu không tìm thấy ID
+    }
+
+    private String getUserName() {
+        int userId = getLoggedInUserId();
+        if (userId != -1) {
+            User user = userDAO.getUserId(userId);
+            if (user != null) {
+                return user.getUsername();
+            }
+        }
+        return null;
+    }
+
+    private void updateUI() {
+        int userId = getLoggedInUserId();
+        if (userId != -1) {
+            // Người dùng đã đăng nhập
+            User user = userDAO.getUserId(userId);
+            if (user != null) {
+                welcomeTextView.setText("Chào " + user.getUsername());
+                welcomeTextView.setVisibility(View.VISIBLE);
+            } else {
+                welcomeTextView.setVisibility(View.GONE);
+            }
+            loginButton.setVisibility(View.GONE);
+            logoutButton.setVisibility(View.VISIBLE);
+        } else {
+            // Người dùng chưa đăng nhập
+            welcomeTextView.setVisibility(View.GONE);
+            loginButton.setVisibility(View.VISIBLE);
+            logoutButton.setVisibility(View.GONE);
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
+
+        userDAO = new UserDAO(this);
+        sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+
+        welcomeTextView = findViewById(R.id.welcomeTextView);
+        logoutButton = findViewById(R.id.logoutButton);
+        loginButton = findViewById(R.id.loginButton);
+
+        updateUI();
+
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
+
+        logoutButton.setOnClickListener(v -> {
+            // Xóa thông tin người dùng từ SharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("LoggedInUserId");
+            editor.remove("LoggedInUserName");
+            editor.apply();
+
+            // Cập nhật giao diện
+            updateUI();
+            Toast.makeText(HomePageActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+        });
+
+        //mo CSDL
+        DatabaseManager.getInstance(this).open();
+
+        //khoi tao cac lop Data-Acess-Object
+        movieDAO = new MovieDAO(this);
+        genreDAO = new GenreDAO(this);
+        languageDAO = new LanguageDAO(this);
+        commentDAO = new CommentDAO(this);
+        ratingDAO = new RatingDAO(this);
+
+        updateUI();
 
         indicatorTab = findViewById(R.id.tab_indicator);
         categoryTab = findViewById(R.id.tabLayout);
@@ -47,15 +149,25 @@ public class HomePageActivity extends AppCompatActivity {
         movieBannerList = new ArrayList<>();
         animeBannerList = new ArrayList<>();
 
-        MovieDAO dao = new MovieDAO(this);
-
-        List<Movie> movieList = dao.getAllMovies();
+        movieList = HomePageActivity.movieDAO.getAllMovies();
 
         if (movieList != null && !movieList.isEmpty()) {
             homeBannerList.addAll(movieList);
-            tvShowBannerList.addAll(movieList);
-            movieBannerList.addAll(movieList);
-            animeBannerList.addAll(movieList);
+            for (Movie movie : movieList) {
+                if (movie.getGenreId() == 5) {
+                    tvShowBannerList.add(movie);
+                }
+            }
+            for (Movie movie : movieList) {
+                if (movie.getGenreId() == 7) {
+                    movieBannerList.add(movie);
+                }
+            }
+            for (Movie movie : movieList) {
+                if (movie.getGenreId() == 4) {
+                    animeBannerList.add(movie);
+                }
+            }
         } else {
             Toast.makeText(this, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show();
         }
@@ -87,16 +199,29 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        List<CategoryItem> homeCatListItem1 = new ArrayList<>();
-        homeCatListItem1.add(new CategoryItem(1, "Love and Thunder", "", ""));
-        homeCatListItem1.add(new CategoryItem(1, "Love and Thunder", "", ""));
-        homeCatListItem1.add(new CategoryItem(1, "Love and Thunder", "", ""));
-        homeCatListItem1.add(new CategoryItem(1, "Love and Thunder", "", ""));
+        List<Movie> homeCatListItem1 = new ArrayList<>();
+        for (Movie movie : movieList) {
+            if (movie.getGenreId() == 5) {
+                homeCatListItem1.add(movie);
+            }
+        }
+        List<Movie> homeCatListItem2 = new ArrayList<>();
+        for (Movie movie : movieList) {
+            if (movie.getGenreId() == 7) {
+                homeCatListItem2.add(movie);
+            }
+        }
+        List<Movie> homeCatListItem3 = new ArrayList<>();
+        for (Movie movie : movieList) {
+            if (movie.getGenreId() == 4) {
+                homeCatListItem3.add(movie);
+            }
+        }
 
         allCategoryList = new ArrayList<>();
-        allCategoryList.add(new AllCategory(1, "Hollywood",homeCatListItem1));
-        allCategoryList.add(new AllCategory(1, "Bollywood",homeCatListItem1));
-        allCategoryList.add(new AllCategory(1, "Anime",homeCatListItem1));
+        allCategoryList.add(new AllCategory(1, "Science Fiction",homeCatListItem1));
+        allCategoryList.add(new AllCategory(2, "War Show",homeCatListItem2));
+        allCategoryList.add(new AllCategory(3, "Anime",homeCatListItem3));
 
         setMainRecycler(allCategoryList);
     }
@@ -109,9 +234,11 @@ public class HomePageActivity extends AppCompatActivity {
 
         if (bannerMoviesList != null && !bannerMoviesList.isEmpty()) {
             Timer sliderTimer = new Timer();
-            sliderTimer.schedule(new AutoSlider(), 4000, 6000);
+            sliderTimer.schedule(new AutoSlider(), 4000, 8000 );
+
         }
         indicatorTab.setupWithViewPager(viewPager, true);
+
     }
 
     class AutoSlider extends TimerTask {
@@ -120,9 +247,9 @@ public class HomePageActivity extends AppCompatActivity {
         public void run() {
             HomePageActivity.this.runOnUiThread(() -> {
                 if (viewPager.getCurrentItem() < homeBannerList.size() - 1) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
                 } else {
-                    viewPager.setCurrentItem(0);
+                    viewPager.setCurrentItem(0, true);
                 }
             });
         }

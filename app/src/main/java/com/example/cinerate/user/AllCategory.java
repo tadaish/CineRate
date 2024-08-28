@@ -1,25 +1,27 @@
 package com.example.cinerate.user;
 
+import com.example.cinerate.models.Movie;
+
 import java.util.List;
 
 public class AllCategory {
     String categoryTitle;
     Integer categoryId;
 
-    private List<CategoryItem> categoryItemList = null;
+    private List<Movie> moviesList = null;
 
-    public AllCategory(Integer categoryId, String categoryTitle, List<CategoryItem> categoryItemList) {
-        this.categoryTitle = categoryTitle;
+    public AllCategory(Integer categoryId, String categoryTitle, List<Movie> moviesList) {
         this.categoryId = categoryId;
-        this.categoryItemList = categoryItemList;
+        this.categoryTitle = categoryTitle;
+        this.moviesList = moviesList;
     }
 
-    public List<CategoryItem> getCategoryItemList() {
-        return categoryItemList;
+    public List<Movie> getCategoryItemList() {
+        return moviesList;
     }
 
-    public void setCategoryItemList(List<CategoryItem> categoryItemList) {
-        this.categoryItemList = categoryItemList;
+    public void setCategoryItemList(List<Movie> moviesList) {
+        this.moviesList = moviesList;
     }
 
     public String getCategoryTitle() {

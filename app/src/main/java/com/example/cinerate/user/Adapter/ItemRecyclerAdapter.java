@@ -6,14 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cinerate.R;
+import com.example.cinerate.daos.MovieDAO;
+import com.example.cinerate.models.Movie;
 import com.example.cinerate.user.CategoryItem;
+import com.example.cinerate.user.HomePageActivity;
 import com.example.cinerate.user.MovieDetails;
 
 import java.util.List;
@@ -21,11 +23,13 @@ import java.util.List;
 public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ItemViewHolder> {
 
     Context context;
-    List<CategoryItem> categoryItemList;
+    List<Movie> moviesList;
+    public static MovieDAO movieDAO;
 
-    public ItemRecyclerAdapter(Context context, List<CategoryItem> categoryItemList) {
+
+    public ItemRecyclerAdapter(Context context, List<Movie> moviesList) {
         this.context = context;
-        this.categoryItemList = categoryItemList;
+        this.moviesList = moviesList;
     }
 
     @NonNull
@@ -36,7 +40,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder,final int position) {
-        Glide.with(context).load(categoryItemList.get(position).getPosterUrl()).into(holder.itemImage);
+        Movie movie = moviesList.get(position);
+        Glide.with(context).load(movie.getPosterUrl()).into(holder.itemImage);
 
         holder.itemImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,10 +49,10 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 int adapterPosition = holder.getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     Intent i = new Intent(context, MovieDetails.class);
-                    i.putExtra("movieId", categoryItemList.get(adapterPosition).getId());
-                    i.putExtra("movieName", categoryItemList.get(adapterPosition).getTitle());
-                    i.putExtra("posterUrl", categoryItemList.get(adapterPosition).getPosterUrl());
-                    i.putExtra("trailerUrl", categoryItemList.get(adapterPosition).getTrailerUrl());
+                    i.putExtra("movieId", moviesList.get(adapterPosition).getId());
+                    i.putExtra("movieName", moviesList.get(adapterPosition).getTitle());
+                    i.putExtra("poster_url", moviesList.get(adapterPosition).getPosterUrl());
+                    i.putExtra("trailerUrl", moviesList.get(adapterPosition).getTrailerUrl());
                     context.startActivity(i);
                 }
             }
@@ -56,7 +61,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return categoryItemList.size();
+        return moviesList.size();
     }
 
     public static final class ItemViewHolder extends  RecyclerView.ViewHolder{
