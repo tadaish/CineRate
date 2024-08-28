@@ -1,11 +1,16 @@
 package com.example.cinerate.user;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import com.example.cinerate.R;
+import com.example.cinerate.daos.MovieDAO;
+import com.example.cinerate.models.Movie;
 import com.example.cinerate.user.Adapter.MainRecyclerAdapter;
 import com.example.cinerate.user.Adapter.MoviePagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -20,10 +25,10 @@ public class HomePageActivity extends AppCompatActivity {
     MoviePagerAdapter moviePagerAdapter;
     TabLayout indicatorTab, categoryTab;
     ViewPager viewPager;
-    List<BannerMovies> homeBannerList;
-    List<BannerMovies> tvShowBannerList;
-    List<BannerMovies> movieBannerList;
-    List<BannerMovies> animeBannerList;
+    List<Movie> homeBannerList;
+    List<Movie> tvShowBannerList;
+    List<Movie> movieBannerList;
+    List<Movie> animeBannerList;
 
     MainRecyclerAdapter mainRecyclerAdapter;
     RecyclerView mainRecycler;
@@ -38,33 +43,23 @@ public class HomePageActivity extends AppCompatActivity {
         categoryTab = findViewById(R.id.tabLayout);
 
         homeBannerList = new ArrayList<>();
-        homeBannerList.add(new BannerMovies(1, "DeadPool", "https://www.imdb.com/title/tt6263850/mediaviewer/rm2199418369/", ""));
-        homeBannerList.add(new BannerMovies(2, "test", "", ""));
-        homeBannerList.add(new BannerMovies(3, "test", "", ""));
-        homeBannerList.add(new BannerMovies(4, "test", "", ""));
-        homeBannerList.add(new BannerMovies(5, "test", "", ""));
-
         tvShowBannerList = new ArrayList<>();
-        tvShowBannerList.add(new BannerMovies(1, "DeadPool", "https://www.imdb.com/title/tt6263850/mediaviewer/rm2199418369/", ""));
-        tvShowBannerList.add(new BannerMovies(2, "test", "", ""));
-        tvShowBannerList.add(new BannerMovies(3, "test", "", ""));
-        tvShowBannerList.add(new BannerMovies(4, "test", "", ""));
-        tvShowBannerList.add(new BannerMovies(5, "test", "", ""));
-
         movieBannerList = new ArrayList<>();
-        movieBannerList.add(new BannerMovies(1, "DeadPool", "https://www.imdb.com/title/tt6263850/mediaviewer/rm2199418369/", ""));
-        movieBannerList.add(new BannerMovies(2, "test", "", ""));
-        movieBannerList.add(new BannerMovies(3, "test", "", ""));
-        movieBannerList.add(new BannerMovies(4, "test", "", ""));
-        movieBannerList.add(new BannerMovies(5, "test", "", ""));
-
         animeBannerList = new ArrayList<>();
-        animeBannerList.add(new BannerMovies(1, "DeadPool", "https://www.imdb.com/title/tt6263850/mediaviewer/rm2199418369/", ""));
-        animeBannerList.add(new BannerMovies(2, "test", "", ""));
-        animeBannerList.add(new BannerMovies(3, "test", "", ""));
-        animeBannerList.add(new BannerMovies(4, "test", "", ""));
-        animeBannerList.add(new BannerMovies(5, "test", "", ""));
 
+        MovieDAO dao = new MovieDAO(this);
+        dao.open();
+
+        List<Movie> movieList = dao.getAllMovies();
+
+        if (movieList != null && !movieList.isEmpty()) {
+            homeBannerList.addAll(movieList);
+            tvShowBannerList.addAll(movieList);
+            movieBannerList.addAll(movieList);
+            animeBannerList.addAll(movieList);
+        } else {
+            Toast.makeText(this, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show();
+        }
         setMoviePagerAdapter(homeBannerList);
 
         categoryTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -107,14 +102,16 @@ public class HomePageActivity extends AppCompatActivity {
         setMainRecycler(allCategoryList);
     }
 
-    private void setMoviePagerAdapter(List<BannerMovies> bannerMoviesList) {
+    private void setMoviePagerAdapter(List<Movie> bannerMoviesList) {
         viewPager = findViewById(R.id.viewPager);
         moviePagerAdapter = new MoviePagerAdapter(this, bannerMoviesList);
         viewPager.setAdapter(moviePagerAdapter);
         indicatorTab.setupWithViewPager(viewPager);
 
-        Timer sliderTimer = new Timer();
-        sliderTimer.schedule(new AutoSlider(), 4000 , 6000);
+        if (bannerMoviesList != null && !bannerMoviesList.isEmpty()) {
+            Timer sliderTimer = new Timer();
+            sliderTimer.schedule(new AutoSlider(), 4000, 6000);
+        }
         indicatorTab.setupWithViewPager(viewPager, true);
     }
 

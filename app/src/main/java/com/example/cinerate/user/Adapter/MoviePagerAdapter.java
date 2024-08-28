@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.example.cinerate.R;
-import com.example.cinerate.user.BannerMovies;
+import com.example.cinerate.models.Movie;
 import com.example.cinerate.user.MovieDetails;
 
 import java.util.List;
@@ -21,21 +20,24 @@ import java.util.List;
 public class MoviePagerAdapter extends PagerAdapter {
 
     Context context;
-    List<BannerMovies> bannerMoviesList;
+    List<Movie> moviesList;
 
-    public MoviePagerAdapter(Context context, List<BannerMovies> bannerMoviesList) {
+    public MoviePagerAdapter(Context context, List<Movie> moviesList) {
         this.context = context;
-        this.bannerMoviesList = bannerMoviesList;
+        this.moviesList = moviesList;
     }
 
     @Override
     public int getCount() {
-        return bannerMoviesList.size();
+        if (moviesList == null || moviesList.isEmpty()) {
+            return 0;
+        }
+        return moviesList.size();
     }
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return false;
+        return view == object;
     }
 
     @Override
@@ -48,18 +50,19 @@ public class MoviePagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.banner_movie_layout, null);
         ImageView bannerImage = view.findViewById(R.id.banner_image);
+        Movie movie = moviesList.get(position);
 
-        Glide.with(context).load(bannerMoviesList.get(position).getImageUrl()).into(bannerImage);
+        Glide.with(context).load(movie.getPosterUrl()).into(bannerImage);
         container.addView(view);
 
         bannerImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, MovieDetails.class);
-                i.putExtra("movieId", bannerMoviesList.get(position).getId());
-                i.putExtra("movieName", bannerMoviesList.get(position).getMovieName());
-                i.putExtra("movieUrl", bannerMoviesList.get(position).getImageUrl());
-                i.putExtra("movieFile", bannerMoviesList.get(position).getFileUrl());
+                i.putExtra("movieId", moviesList.get(position).getId());
+                i.putExtra("movieName", moviesList.get(position).getTitle());
+                i.putExtra("poster_url", moviesList.get(position).getPosterUrl());
+                i.putExtra("trailerUrl", moviesList.get(position).getTrailerUrl());
                 context.startActivity(i);
             }
         });

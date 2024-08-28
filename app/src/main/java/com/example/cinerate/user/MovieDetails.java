@@ -31,7 +31,7 @@ public class MovieDetails extends AppCompatActivity {
 
         mId = getIntent().getStringExtra("movieId");
         mName = getIntent().getStringExtra("movieName");
-        mImage= getIntent().getStringExtra("movieUrl");
+        mImage= getIntent().getStringExtra("poster_url");
         mFileUrl = getIntent().getStringExtra("movieFile");
 
         Glide.with(this).load(mImage).into(movieImage);
