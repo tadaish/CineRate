@@ -10,7 +10,7 @@
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchView"
+        android:id="@+id/langSearchView"
         android:iconifiedByDefault="false"
         android:queryHint="Tìm kiếm..."
         android:queryBackground="@null"
@@ -34,7 +34,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchView"
+        android:layout_below="@id/langSearchView"
         android:padding="16dp"
         android:id="@+id/langListView"/>
 

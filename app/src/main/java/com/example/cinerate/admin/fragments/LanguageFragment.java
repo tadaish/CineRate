@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.cinerate.R;
 import com.example.cinerate.admin.AdminHomeActivity;
@@ -22,12 +23,14 @@ import com.example.cinerate.daos.LanguageDAO;
 import com.example.cinerate.models.Language;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LanguageFragment extends Fragment {
     public static FragmentManager fragmentManager;
     public static List<Language> languageList;
     public static LanguageAdapter langAdapter;
+    private List<Language> filteredList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +43,21 @@ public class LanguageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ExtendedFloatingActionButton createLangBtn = view.findViewById(R.id.createLangBtn);
+        SearchView langSearchView = view.findViewById(R.id.langSearchView);
+
+        langSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filteredList = AdminHomeActivity.languageDAO.getLangsByName(s);
+                langAdapter.filterLanguage(filteredList);
+                return false;
+            }
+        });
         fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

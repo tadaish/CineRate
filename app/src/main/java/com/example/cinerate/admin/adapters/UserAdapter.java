@@ -15,6 +15,7 @@ import com.example.cinerate.R;
 import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.fragments.UserDetailFragment;
 import com.example.cinerate.admin.fragments.UserFragment;
+import com.example.cinerate.models.Movie;
 import com.example.cinerate.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -22,9 +23,11 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> userList;
+    private List<User> orgUserList;
 
     public UserAdapter (List<User> userList){
         this.userList = userList;
+        this.orgUserList = userList;
     }
     @NonNull
     @Override
@@ -87,5 +90,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             editUserBtn = itemView.findViewById(R.id.editUserBtn);
             delUserBtn = itemView.findViewById(R.id.delUserBtn);
         }
+    }
+
+    public void filterUser(List<User> filteredList) {
+        if (filteredList == null || filteredList.isEmpty()) {
+            userList.clear();
+            userList.addAll(orgUserList);
+        } else {
+            userList.clear();
+            userList.addAll(filteredList);
+        }
+        notifyDataSetChanged();
     }
 }

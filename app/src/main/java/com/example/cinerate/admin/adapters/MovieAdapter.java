@@ -34,16 +34,19 @@ import com.example.cinerate.models.Movie;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private List<Movie> movieList;
+    private List<Movie> orgMovieList;
     private final Context context;
 
     public MovieAdapter(List<Movie> movieList, Context context){
         this.movieList = movieList;
+        this.orgMovieList = movieList;
         this.context = context;
     }
 
@@ -65,7 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         Glide.with(holder.itemView.getContext())
                 .load(m.getPosterUrl())
-                .transform(new CenterCrop(), new BlurTransformation(5,2))
+                .centerCrop()
                 .into(holder.posterImageView);
 
         int itemPosition = holder.getAbsoluteAdapterPosition();
@@ -126,8 +129,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             movieCardView = itemView.findViewById(R.id.movieCardView);
             posterImageView = itemView.findViewById(R.id.posterImageView);
         }
-
-
-
     }
+
+    public void filterMovie(List<Movie> filteredList) {
+        if (filteredList == null || filteredList.isEmpty()) {
+            movieList.clear();
+            movieList.addAll(orgMovieList);
+        } else {
+            movieList.clear();
+            movieList.addAll(filteredList);
+        }
+        notifyDataSetChanged();
+    }
+
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.cinerate.R;
 import com.example.cinerate.admin.AdminHomeActivity;
@@ -30,6 +31,7 @@ public class UserFragment extends Fragment {
     public static FragmentManager fragmentManager;
     public static List<User> userList;
     public static UserAdapter adapter;
+    private List<User> filteredList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +47,21 @@ public class UserFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ExtendedFloatingActionButton createUserBtn = view.findViewById(R.id.createUserBtn);
+        SearchView userSearchView = view.findViewById(R.id.userSearchView);
+
+        userSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filteredList = AdminHomeActivity.userDAO.getUserListByName(s);
+                adapter.filterUser(filteredList);
+                return false;
+            }
+        });
 
         userList = AdminHomeActivity.userDAO.getAllUsers();
         adapter = new UserAdapter(userList);

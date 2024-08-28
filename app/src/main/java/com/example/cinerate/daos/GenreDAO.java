@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.cinerate.helper.CinaRateHelper;
 import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Genre;
+import com.example.cinerate.models.Language;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +153,31 @@ public class GenreDAO {
             cursor.close();
         }
         return gen_id;
+    }
+
+
+    public List<Genre> getGensByName(String name){
+        List<Genre> genreList = new ArrayList<>();
+
+        String query =  "SELECT *" +
+                "FROM Genres " +
+                "WHERE name LIKE ?";
+
+        String[] selectionArgs = {"%" + name + "%"};
+
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Genre genre = new Genre(
+                        cursor.getString(cursor.getColumnIndexOrThrow("name"))
+                );
+                genreList.add(genre);
+            }while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return genreList;
     }
 
 }

@@ -20,6 +20,7 @@ import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.fragments.GenreDetailFragment;
 import com.example.cinerate.admin.fragments.GenreFragment;
 import com.example.cinerate.models.Genre;
+import com.example.cinerate.models.Movie;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,9 +28,11 @@ import java.util.List;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder> {
     private List<Genre> genList;
+    private List<Genre> orgGenList;
 
     public GenreAdapter(List<Genre> genList){
         this.genList = genList;
+        this.orgGenList = genList;
     }
 
 
@@ -98,5 +101,16 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         }
     }
 
+
+    public void filterGen(List<Genre> filteredList) {
+        if (filteredList == null || filteredList.isEmpty()) {
+            genList.clear();
+            genList.addAll(orgGenList);
+        } else {
+            genList.clear();
+            genList.addAll(filteredList);
+        }
+        notifyDataSetChanged();
+    }
 
 }

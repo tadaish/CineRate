@@ -9,7 +9,7 @@
    <SearchView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:id="@+id/searchView"
+       android:id="@+id/movieSearchView"
        android:iconifiedByDefault="false"
        android:queryHint="Tìm kiếm..."
        android:queryBackground="@null"
@@ -33,7 +33,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchView"
+        android:layout_below="@id/movieSearchView"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
         android:layout_marginTop="10dp"
@@ -46,7 +46,8 @@
             android:inputType="text"
             android:padding="20dp"
             android:layout_weight="0.4"
-            android:hint="Thể loại"/>
+            android:hint="Thể loại"
+            android:focusable="true"/>
         <AutoCompleteTextView
             android:id="@+id/lang_dropdown"
             android:hint="Ngôn ngữ"
@@ -55,7 +56,8 @@
             android:inputType="text"
             android:padding="20dp"
             android:layout_weight="0.4"
-            android:drawableEnd="@drawable/arrow_drop_down"/>
+            android:drawableEnd="@drawable/arrow_drop_down"
+            android:focusable="true"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

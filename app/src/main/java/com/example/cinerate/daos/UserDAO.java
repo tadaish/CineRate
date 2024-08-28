@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
 import com.example.cinerate.helper.DatabaseManager;
+import com.example.cinerate.models.Language;
 import com.example.cinerate.models.User;
 import com.example.cinerate.utils.PasswordUtils;
 
@@ -150,5 +151,31 @@ public class UserDAO {
         }
 
         return count;
+    }
+
+    public List<User> getUserListByName(String username){
+        List<User> userList = new ArrayList<>();
+
+        String query =  "SELECT *" +
+                "FROM Users " +
+                "WHERE username LIKE ?";
+
+        String[] selectionArgs = {"%" + username + "%"};
+
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                User u = new User(
+                        cursor.getString(cursor.getColumnIndexOrThrow("username")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("password")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("role"))
+                );
+                userList.add(u);
+            }while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return userList;
     }
 }

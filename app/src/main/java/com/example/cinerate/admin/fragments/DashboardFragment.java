@@ -11,8 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -25,6 +27,7 @@ import java.util.Map;
 
 public class DashboardFragment extends Fragment {
     private LineChart lineChart;
+    private TextView txtMovieCount, txtGenCount, txtLangCount, txtUserCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +39,22 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        txtMovieCount = view.findViewById(R.id.txtMovieCount);
+        txtGenCount = view.findViewById(R.id.txtGenCount);
+        txtLangCount = view.findViewById(R.id.txtLangCount);
+        txtUserCount = view.findViewById(R.id.txtUserCount);
+
+        int movieCount = AdminHomeActivity.movieDAO.getMovieCount();
+        int genCount = AdminHomeActivity.genreDAO.getGenreCount();
+        int langCount = AdminHomeActivity.languageDAO.getLangCount();
+        int userCount = AdminHomeActivity.userDAO.getUserCount();
+
+        txtMovieCount.setText(String.valueOf(movieCount));
+        txtGenCount.setText(String.valueOf(genCount));
+        txtLangCount.setText(String.valueOf(langCount));
+        txtUserCount.setText(String.valueOf(userCount));
+
+
 
         lineChart = view.findViewById(R.id.lineChart);
 

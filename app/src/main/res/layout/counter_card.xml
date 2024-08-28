@@ -24,18 +24,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:text="Card Title"
-                    android:textSize="30sp"
-                    android:textStyle="bold"/>
+                    android:text="Phim"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="desc"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:paddingTop="10dp"/>
+                    android:paddingTop="10dp"
+                    android:id="@+id/txtMovieCount"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -54,10 +55,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="Card Title"
-                android:textSize="30sp"
+                android:text="Thể loại"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -65,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:text="desc"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp"
+                android:id="@+id/txtGenCount"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -84,10 +86,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="Card Title"
-                android:textSize="30sp"
+                android:text="Ngôn ngữ"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -95,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:text="desc"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp"
+                android:id="@+id/txtLangCount"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -115,10 +118,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="Card Title"
-                android:textSize="30sp"
+                android:text="Người dùng"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -126,7 +129,8 @@
                 android:layout_height="wrap_content"
                 android:text="desc"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp"
+                android:id="@+id/txtUserCount"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

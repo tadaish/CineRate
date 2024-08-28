@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.example.cinerate.helper.CinaRateHelper;
 import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Movie;
@@ -118,8 +120,7 @@ public class MovieDAO {
 
         String query =  "SELECT m.*" +
                         "FROM Movies m " +
-                        "INNER JOIN MovieGenre mg on mg.movie_id = m.id " +
-                        "INNER JOIN Genres g on g.id = mg.genre.id " +
+                        "INNER JOIN Genres g on g.id = m.genre_id " +
                         "WHERE g.id = ?";
 
         String[] selectionArgs = {String.valueOf(genre_id)};
@@ -249,5 +250,36 @@ public class MovieDAO {
         return count;
     }
 
+    public List<Movie> getMoviesByTitle(String movieTitle){
+        List<Movie> movies = new ArrayList<>();
+
+        String query =  "SELECT *" +
+                "FROM Movies " +
+                "WHERE title LIKE ?";
+
+        String[] selectionArgs = {"%" + movieTitle + "%"};
+
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Movie movie = new Movie(
+                        cursor.getString(cursor.getColumnIndexOrThrow("title")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("description")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("release_year")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("director")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("main_cast")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("trailer_url")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("genre_id"))
+                );
+                movies.add(movie);
+            }while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return movies;
+    }
 
 }

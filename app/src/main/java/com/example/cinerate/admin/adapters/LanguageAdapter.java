@@ -16,15 +16,18 @@ import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.fragments.LanguageDetailFragment;
 import com.example.cinerate.admin.fragments.LanguageFragment;
 import com.example.cinerate.models.Language;
+import com.example.cinerate.models.Movie;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder> {
     private List<Language> languageList;
+    private List<Language> orgLanguageList;
 
     public LanguageAdapter (List<Language> languageList){
         this.languageList = languageList;
+        this.orgLanguageList = languageList;
     }
 
     @NonNull
@@ -85,5 +88,16 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
             langEditBtn = itemView.findViewById(R.id.langEditBtn);
             langDelBtn = itemView.findViewById(R.id.langDelBtn);
         }
+    }
+
+    public void filterLanguage(List<Language> filteredList) {
+        if (filteredList == null || filteredList.isEmpty()) {
+            languageList.clear();
+            languageList.addAll(orgLanguageList);
+        } else {
+            languageList.clear();
+            languageList.addAll(filteredList);
+        }
+        notifyDataSetChanged();
     }
 }

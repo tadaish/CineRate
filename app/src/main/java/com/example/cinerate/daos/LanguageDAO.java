@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.cinerate.helper.CinaRateHelper;
 import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Language;
+import com.example.cinerate.models.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,5 +164,29 @@ public class LanguageDAO {
             cursor.close();
         }
         return lang_id;
+    }
+
+    public List<Language> getLangsByName(String name){
+        List<Language> languageList = new ArrayList<>();
+
+        String query =  "SELECT *" +
+                "FROM Languages " +
+                "WHERE name LIKE ?";
+
+        String[] selectionArgs = {"%" + name + "%"};
+
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Language language = new Language(
+                        cursor.getString(cursor.getColumnIndexOrThrow("name"))
+                );
+                languageList.add(language);
+            }while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return languageList;
     }
 }
