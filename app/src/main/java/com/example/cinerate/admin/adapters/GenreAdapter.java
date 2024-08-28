@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.fragments.GenreDetailFragment;
 import com.example.cinerate.admin.fragments.GenreFragment;
 import com.example.cinerate.models.Genre;
@@ -68,8 +69,8 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         holder.genDelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GenreFragment.dao.deleteGenre(gen.getId());
-                genList = GenreFragment.dao.getAllGenres();
+                AdminHomeActivity.genreDAO.deleteGenre(gen.getId());
+                genList = AdminHomeActivity.genreDAO.getAllGenres();
                 GenreFragment.adapter.notifyItemRemoved(item_position);
             }
         });

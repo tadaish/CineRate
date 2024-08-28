@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Language;
 
 import java.util.ArrayList;
@@ -14,19 +15,11 @@ import java.util.List;
 
 public class LanguageDAO {
     private SQLiteDatabase database;
-    private CinaRateHelper dbhelper;
 
     public LanguageDAO (Context context){
-        dbhelper = new CinaRateHelper(context);
+        database = DatabaseManager.getInstance(context).open();
     }
 
-    public void open() {
-        database = dbhelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbhelper.close();
-    }
 
     public List<Language> getAllLanguages() {
         List<Language> langs = new ArrayList<>();
@@ -49,7 +42,7 @@ public class LanguageDAO {
 
     public Language getLangById(int lang_id) {
         Language lang = null;
-        String query  = "SELECT * FROM Genres WHERE id = ?";
+        String query  = "SELECT * FROM Languages WHERE id = ?";
         String[] selectionArgs = {String.valueOf(lang_id)};
         Cursor cursor = database.rawQuery(query, selectionArgs);
 

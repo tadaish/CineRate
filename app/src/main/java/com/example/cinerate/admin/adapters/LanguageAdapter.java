@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.fragments.LanguageDetailFragment;
 import com.example.cinerate.admin.fragments.LanguageFragment;
 import com.example.cinerate.models.Language;
@@ -62,8 +63,8 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
         holder.langDelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LanguageFragment.dao.deleteLanguage(lang.getId());
-                languageList = LanguageFragment.dao.getAllLanguages();
+                AdminHomeActivity.languageDAO.deleteLanguage(lang.getId());
+                languageList = AdminHomeActivity.languageDAO.getAllLanguages();
                 LanguageFragment.langAdapter.notifyItemRemoved(itemPosition);
             }
         });

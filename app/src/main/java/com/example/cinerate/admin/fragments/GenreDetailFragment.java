@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.daos.GenreDAO;
 import com.example.cinerate.models.Genre;
 import com.google.android.material.button.MaterialButton;
@@ -60,21 +61,19 @@ public class GenreDetailFragment extends Fragment {
                         if (isEditMode) {
                             String newGenName = genEditText.getText().toString();
                             Genre gen = new Genre(itemId, newGenName);
-                            long rowsAffected = GenreFragment.dao.updateGenre(gen);
+                            long rowsAffected = AdminHomeActivity.genreDAO.updateGenre(gen);
                             if (rowsAffected != 0) {
                                 Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
                                 GenreFragment.adapter.notifyItemChanged(itemPosition);
-                                GenreFragment.dao.close();
                             } else {
                                 Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Genre gen = new Genre(genName);
-                            long result = GenreFragment.dao.addGenre(gen);
+                            long result =AdminHomeActivity.genreDAO.addGenre(gen);
                             if (result != -1) {
                                 Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
                                 GenreFragment.adapter.notifyItemInserted(GenreFragment.genreList.size() -1);
-                                GenreFragment.dao.close();
                             } else {
                                 Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                             }

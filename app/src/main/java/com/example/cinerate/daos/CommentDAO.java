@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Comment;
 
 import java.util.ArrayList;
@@ -14,19 +15,11 @@ import java.util.List;
 
 public class CommentDAO {
     private SQLiteDatabase database;
-    private CinaRateHelper dbhelper;
 
     public CommentDAO (Context context){
-        dbhelper = new CinaRateHelper(context);
+        database = DatabaseManager.getInstance(context).open();
     }
 
-    public void open() {
-        database = dbhelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbhelper.close();
-    }
 
     public List<Comment> getAllCommentsByMovie(int movie_id){
         List<Comment> cmts = new ArrayList<>();

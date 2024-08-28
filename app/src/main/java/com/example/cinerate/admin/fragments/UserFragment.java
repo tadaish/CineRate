@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.adapters.UserAdapter;
 import com.example.cinerate.daos.UserDAO;
 import com.example.cinerate.models.User;
@@ -28,7 +29,6 @@ import java.util.List;
 public class UserFragment extends Fragment {
     public static FragmentManager fragmentManager;
     public static List<User> userList;
-    public static UserDAO dao;
     public static UserAdapter adapter;
 
     @Override
@@ -45,13 +45,11 @@ public class UserFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ExtendedFloatingActionButton createUserBtn = view.findViewById(R.id.createUserBtn);
-        dao = new UserDAO(this.getContext());
-        dao.open();
 
 //        dao.addUser(new User("Admin","1234", "admin"));
 //        dao.addUser(new User("u1","1234", "user"));
 
-        userList = dao.getAllUsers();
+        userList = AdminHomeActivity.userDAO.getAllUsers();
         adapter = new UserAdapter(userList);
         RecyclerView recyclerView = view.findViewById(R.id.userRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

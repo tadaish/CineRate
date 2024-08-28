@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.fragments.UserDetailFragment;
 import com.example.cinerate.admin.fragments.UserFragment;
 import com.example.cinerate.models.User;
@@ -63,8 +64,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.delUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserFragment.dao.deleteUser(u.getId());
-                userList = UserFragment.dao.getAllUsers();
+                AdminHomeActivity.userDAO.deleteUser(u.getId());
+                userList = AdminHomeActivity.userDAO.getAllUsers();
                 UserFragment.adapter.notifyItemRemoved(itemPosition);
             }
         });

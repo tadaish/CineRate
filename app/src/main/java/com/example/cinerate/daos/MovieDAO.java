@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
+import com.example.cinerate.helper.DatabaseManager;
 import com.example.cinerate.models.Movie;
 
 import java.util.ArrayList;
@@ -14,19 +15,11 @@ import java.util.List;
 
 public class MovieDAO {
     private SQLiteDatabase database;
-    private CinaRateHelper dbhelper;
 
     public MovieDAO (Context context){
-        dbhelper = new CinaRateHelper(context);
+        database = DatabaseManager.getInstance(context).open();
     }
 
-    public void open() {
-        database = dbhelper.getWritableDatabase();
-    }
-
-    public void close() {
-        dbhelper.close();
-    }
 
     public long addMovie(Movie movie){
         ContentValues values = new ContentValues();
@@ -39,6 +32,7 @@ public class MovieDAO {
         values.put("main_cast", movie.getMainCast());
         values.put("trailer_url", movie.getTrailerUrl());
         values.put("language_id", movie.getLanguageId());
+        values.put("genre_id", movie.getGenreId());
 
         long result = -1;
         try {
@@ -59,19 +53,12 @@ public class MovieDAO {
         return result;
     }
 
-    public long addMovieGenre(int movieId, int genreId){
-        ContentValues values = new ContentValues();
-        values.put("movie_id", movieId);
-        values.put("movie_id", genreId);
-
-        return database.insert("MovieGenre", null, values);
-    }
 
     public Movie getMovieById(int id){
         Movie movie = null;
         String[] columns = {
                 "id", "title", "description", "release_year", "director",
-                "duration", "poster_url", "main_cast", "trailer_url", "language_id"};
+                "duration", "poster_url", "main_cast", "trailer_url", "language_id", "genre_id"};
         String selection = "id= ?";
         String[] selectionArgs = {String.valueOf(id)};
         Cursor cursor = database.query("Movies", columns, selection, selectionArgs, null, null, null);
@@ -85,7 +72,8 @@ public class MovieDAO {
                     cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                     cursor.getString(cursor.getColumnIndexOrThrow("main_cast")),
                     cursor.getString(cursor.getColumnIndexOrThrow("trailer_url")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("language_id"))
+                    cursor.getInt(cursor.getColumnIndexOrThrow("language_id")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("genre_id"))
             );
             cursor.close();
         }
@@ -108,7 +96,8 @@ public class MovieDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                         cursor.getString(cursor.getColumnIndexOrThrow("main_cast")),
                         cursor.getString(cursor.getColumnIndexOrThrow("trailer_url")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id"))
+                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("genre_id"))
                 );
                 Log.d("MovieDAO", "Movie: " + movie.getTitle());
                 movies.add(movie);
@@ -146,7 +135,8 @@ public class MovieDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                         cursor.getString(cursor.getColumnIndexOrThrow("main_cast")),
                         cursor.getString(cursor.getColumnIndexOrThrow("trailer_url")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id"))
+                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("genre_id"))
                 );
                 movies.add(movie);
             }while (cursor.moveToNext());
@@ -180,7 +170,8 @@ public class MovieDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow("poster_url")),
                         cursor.getString(cursor.getColumnIndexOrThrow("main_cast")),
                         cursor.getString(cursor.getColumnIndexOrThrow("trailer_url")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id"))
+                        cursor.getInt(cursor.getColumnIndexOrThrow("language_id")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("genre_id"))
                 );
                 movies.add(movie);
             }while (cursor.moveToNext());
@@ -197,12 +188,12 @@ public class MovieDAO {
         values.put("description", movie.getDescription());
         values.put("release_year", movie.getRelease_year());
         values.put("director", movie.getDirector());
-        values.put("posterUrl", movie.getPosterUrl());
+        values.put("poster_url", movie.getPosterUrl());
         values.put("averageRating", movie.getAverageRating());
         values.put("mainCast", movie.getMainCast());
-        values.put("trailerUrl", movie.getTrailerUrl());
-        values.put("languageId", movie.getLanguageId());
-        values.put("is_active", movie.getIs_active());
+        values.put("trailer_url", movie.getTrailerUrl());
+        values.put("language_id", movie.getLanguageId());
+        values.put("genre_id", movie.getGenreId());
 
         String whereClause = "id = ?";
         String[] whereArgs = {String.valueOf(movie.getId())};

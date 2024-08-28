@@ -12,9 +12,9 @@ public class Movie {
     private String mainCast;
     private String trailerUrl;
     private int languageId;
-    private String is_active;
+    private int genreId;
 
-    public Movie( String title, String description, int release_year, String director, String posterUrl, String mainCast, String trailerUrl, int languageId){
+    public Movie( String title, String description, int release_year, String director, String posterUrl, String mainCast, String trailerUrl, int languageId, int genreId){
         this.title = title;
         this.description = description;
         this.release_year = release_year;
@@ -23,6 +23,7 @@ public class Movie {
         this.mainCast = mainCast;
         this.trailerUrl = trailerUrl;
         this.languageId = languageId;
+        this.genreId = genreId;
     }
 
     public int getId() {
@@ -113,11 +114,11 @@ public class Movie {
         this.languageId = languageId;
     }
 
-    public String getIs_active() {
-        return is_active;
+    public int getGenreId() {
+        return genreId;
     }
 
-    public void setIs_active(String is_active) {
-        this.is_active = is_active;
+    public void setGenreId(int genreId) {
+        this.genreId = genreId;
     }
 }

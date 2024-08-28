@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.admin.adapters.GenreAdapter;
 import com.example.cinerate.admin.adapters.LanguageAdapter;
 import com.example.cinerate.daos.LanguageDAO;
@@ -26,7 +27,6 @@ import java.util.List;
 public class LanguageFragment extends Fragment {
     public static FragmentManager fragmentManager;
     public static List<Language> languageList;
-    public static LanguageDAO dao;
     public static LanguageAdapter langAdapter;
 
     @Override
@@ -43,14 +43,12 @@ public class LanguageFragment extends Fragment {
         fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        dao = new LanguageDAO(this.getContext());
-        dao.open();
 
 //        dao.addLanguage(new Language("Tiếng Việt"));
 //        dao.addLanguage(new Language("Tiếng Anh"));
 //        dao.addLanguage(new Language("Tiếng Nhật"));
 
-        languageList = dao.getAllLanguages();
+        languageList = AdminHomeActivity.languageDAO.getAllLanguages();
         langAdapter = new LanguageAdapter(languageList);
         RecyclerView recyclerView = view.findViewById(R.id.langListView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

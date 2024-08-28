@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.models.Language;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -60,21 +61,19 @@ public class LanguageDetailFragment extends Fragment {
                         if(isEditMode) {
                             String newLangName = langEditText.getText().toString().trim();
                             Language lang =  new Language(itemId, newLangName);
-                            long rowsAffected = LanguageFragment.dao.updateLanguage(lang);
+                            long rowsAffected = AdminHomeActivity.languageDAO.updateLanguage(lang);
                             if (rowsAffected != 0) {
                                 Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
                                 LanguageFragment.langAdapter.notifyItemChanged(itemPosition);
-                                LanguageFragment.dao.close();
                             } else {
                                 Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Language lang = new Language(langName);
-                            long result = LanguageFragment.dao.addLanguage(lang);
+                            long result = AdminHomeActivity.languageDAO.addLanguage(lang);
                             if (result != -1) {
                                 Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
                                 GenreFragment.adapter.notifyItemInserted(GenreFragment.genreList.size() -1);
-                                GenreFragment.dao.close();
                             } else {
                                 Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
                             }
