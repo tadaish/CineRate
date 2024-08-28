@@ -38,7 +38,7 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHoler> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private List<Movie> movieList;
     private final Context context;
 
@@ -49,13 +49,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @NonNull
     @Override
-    public MovieViewHoler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_movie, parent, false);
-        return new MovieAdapter.MovieViewHoler(view);
+        return new MovieAdapter.MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieViewHoler holder, int position) {
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie m = movieList.get(position);
         Genre g = AdminHomeActivity.genreDAO.getGenreById(m.getGenreId());
         Language lang = AdminHomeActivity.languageDAO.getLangById(m.getLanguageId());
@@ -68,7 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 .transform(new CenterCrop(), new BlurTransformation(5,2))
                 .into(holder.posterImageView);
 
-        int itemPosition = holder.getPosition();
+        int itemPosition = holder.getAbsoluteAdapterPosition();
         holder.editMovBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +99,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             @Override
             public void onClick(View view) {
                 AdminHomeActivity.movieDAO.deleteMovie(m.getId());
-                movieList =  AdminHomeActivity.movieDAO.getAllMovies();
+                movieList.remove(itemPosition);
                 MovieFragment.adapter.notifyItemRemoved(itemPosition);
             }
         });
@@ -111,12 +111,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieList.size();
     }
 
-    public static class MovieViewHoler extends RecyclerView.ViewHolder{
+    public static class MovieViewHolder extends RecyclerView.ViewHolder{
         public TextView txtMovieTitle, txtMovieGen, txtMovieLang;
         public FloatingActionButton editMovBtn, delMovBtn;
         public MaterialCardView movieCardView;
         public ImageView posterImageView;
-        public MovieViewHoler(@NonNull View itemView){
+        public MovieViewHolder(@NonNull View itemView){
             super(itemView);
             txtMovieTitle = itemView.findViewById(R.id.txtMovieTitle);
             txtMovieGen = itemView.findViewById(R.id.txtMovieGen);

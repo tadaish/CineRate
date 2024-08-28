@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.cinerate.R;
 import com.example.cinerate.admin.AdminHomeActivity;
+import com.example.cinerate.admin.adapters.UserAdapter;
 import com.example.cinerate.models.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -59,7 +60,7 @@ public class UserDetailFragment extends Fragment {
         if (isEditMode) {
             txtEditUsername.setText(itemName);
             txtEditPassword.setText(itemPassword);
-            dropdownUserRole.setText(itemRole);
+            dropdownUserRole.setText(itemRole, false);
             saveUserBtn.setText("Sửa");
         }else {
             saveUserBtn.setText("Thêm");
@@ -74,16 +75,14 @@ public class UserDetailFragment extends Fragment {
             public void onClick(View view) {
                 username = txtEditUsername.getText().toString().trim();
                 password = txtEditPassword.getText().toString().trim();
+                role = dropdownUserRole.getText().toString();
                 if(!username.isEmpty() && !password.isEmpty()){
                     if(isEditMode){
-                        String newUsername = txtEditUsername.getText().toString();
-                        String newPassword = txtEditPassword.getText().toString();
-                        String newRole = dropdownUserRole.getText().toString();
-                        User u = new User(itemId, newUsername, newPassword, newRole);
-
+                        User u = new User(itemId, username, password, role);
                         long rowsAffected = AdminHomeActivity.userDAO.updateUser(u);
                         if(rowsAffected !=0){
                             Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
+                            UserFragment.userList.set(itemPosition, u);
                             UserFragment.adapter.notifyItemChanged(itemPosition);
                         }else {
                             Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
@@ -91,9 +90,10 @@ public class UserDetailFragment extends Fragment {
                     }else {
                         User u = new User(username, password, role);
                         long result = AdminHomeActivity.userDAO.addUser(u);
-                        if(result !=-1){
-                            Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT);
-                            UserFragment.adapter.notifyItemInserted(UserFragment.userList.size() -1);
+                        if(result != -1){
+                            Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                            UserFragment.userList.add(u);
+                            UserFragment.adapter.notifyItemInserted(UserFragment.userList.size() - 1);
                         }else {
                             Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
                         }

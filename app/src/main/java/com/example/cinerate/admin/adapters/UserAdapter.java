@@ -39,7 +39,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.txtUserName.setText(u.getUsername());
         holder.txtUserRole.setText(u.getRole());
 
-        int itemPosition = holder.getAdapterPosition();
+        int itemPosition = holder.getAbsoluteAdapterPosition();
 
         holder.editUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override

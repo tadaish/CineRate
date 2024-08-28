@@ -40,10 +40,8 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ExtendedFloatingActionButton addBtn = view.findViewById(R.id.createMovieBtn);
+
         fragmentManager = getParentFragmentManager();
-
-
-
 
         movieList = AdminHomeActivity.movieDAO.getAllMovies();
         adapter = new MovieAdapter(movieList, this.getContext());

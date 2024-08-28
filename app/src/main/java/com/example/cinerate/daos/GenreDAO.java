@@ -141,4 +141,17 @@ public class GenreDAO {
         return count;
     }
 
+    public int getGenIdByName(String name){
+        int gen_id = 0;
+        String query = "SELECT id FROM Genres WHERE name = ?";
+        String[] whereArgs = {name};
+        Cursor cursor = database.rawQuery(query, whereArgs);
+
+        if (cursor != null && cursor.moveToFirst()){
+           gen_id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            cursor.close();
+        }
+        return gen_id;
+    }
+
 }

@@ -45,7 +45,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         Genre gen = genList.get(position);
         holder.genNameTxt.setText(gen.getName());
 
-        int item_position = holder.getAdapterPosition();
+        int item_position = holder.getAbsoluteAdapterPosition();
 
         holder.genEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
             @Override
             public void onClick(View view) {
                 AdminHomeActivity.genreDAO.deleteGenre(gen.getId());
-                genList = AdminHomeActivity.genreDAO.getAllGenres();
+                genList.remove(item_position);
                 GenreFragment.adapter.notifyItemRemoved(item_position);
             }
         });

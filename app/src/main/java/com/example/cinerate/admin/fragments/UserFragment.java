@@ -46,9 +46,6 @@ public class UserFragment extends Fragment {
 
         ExtendedFloatingActionButton createUserBtn = view.findViewById(R.id.createUserBtn);
 
-        AdminHomeActivity.userDAO.addUser(new User("Admin","1234", "admin"));
-        AdminHomeActivity.userDAO.addUser(new User("u1","1234", "user"));
-
         userList = AdminHomeActivity.userDAO.getAllUsers();
         adapter = new UserAdapter(userList);
         RecyclerView recyclerView = view.findViewById(R.id.userRecyclerView);

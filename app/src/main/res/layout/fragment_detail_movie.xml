@@ -37,8 +37,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:inputType="text"
-                    android:padding="20dp"
-                    android:id="@+id/movieGenDropDown"/>
+                    android:paddingLeft="20dp"
+                    android:id="@+id/movieLangDropDown"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -54,8 +54,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:inputType="text"
-                    android:padding="20dp"
-                    android:id="@+id/movieLangDropDown"/>
+                    android:paddingLeft="20dp"
+                    android:id="@+id/movieGenDropDown"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +118,11 @@
                     android:inputType="textMultiLine"
                     android:minLines="5"
                     android:lines="10"
-                    android:id="@+id/txtMovieDes"/>
+                    android:id="@+id/txtMovieDes"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="always"
+                    android:gravity="top"
+                    android:scrollHorizontally="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -159,5 +163,4 @@
                 android:layout_alignParentEnd="true"
                 android:backgroundTint="@color/soft_blue"/>
         </RelativeLayout>
-
 </ScrollView>

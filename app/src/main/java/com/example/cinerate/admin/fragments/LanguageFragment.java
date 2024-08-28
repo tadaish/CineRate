@@ -43,9 +43,6 @@ public class LanguageFragment extends Fragment {
         fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-
-
-
         languageList = AdminHomeActivity.languageDAO.getAllLanguages();
         langAdapter = new LanguageAdapter(languageList);
         RecyclerView recyclerView = view.findViewById(R.id.langListView);

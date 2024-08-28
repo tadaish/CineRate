@@ -151,4 +151,17 @@ public class LanguageDAO {
         }
         return langName;
     }
+
+    public int getLangIdByName(String name){
+        int lang_id = 0;
+        String query = "SELECT id FROM Languages WHERE name = ?";
+        String[] whereArgs = {name};
+        Cursor cursor = database.rawQuery(query, whereArgs);
+
+        if (cursor != null && cursor.moveToFirst()){
+            lang_id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            cursor.close();
+        }
+        return lang_id;
+    }
 }
