@@ -99,10 +99,14 @@ public class MovieDAO {
                         cursor.getInt(cursor.getColumnIndexOrThrow("language_id")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("genre_id"))
                 );
+                Log.d("MovieDAO", "Movie: " + movie.getTitle());
                 movies.add(movie);
             }while (cursor.moveToNext());
 
             cursor.close();
+
+        } else {
+            Log.i("MovieDAO", "Không có dữ liệu trong bảng Movies");
         }
 
         return movies;

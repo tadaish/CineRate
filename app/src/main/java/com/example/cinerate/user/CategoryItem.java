@@ -2,15 +2,15 @@ package com.example.cinerate.user;
 
 public class CategoryItem {
     Integer id;
-    String movieName;
-    String imageUrl;
-    String fileUrl;
+    String title;
+    String posterUrl;
+    String trailerUrl;
 
-    public CategoryItem(Integer id, String movieName, String imageUrl, String fileUrl) {
+    public CategoryItem(Integer id, String movieName, String posterUrl, String trailerUrl) {
         this.id = id;
-        this.movieName = movieName;
-        this.imageUrl = imageUrl;
-        this.fileUrl = fileUrl;
+        this.title = movieName;
+        this.posterUrl = posterUrl;
+        this.trailerUrl = trailerUrl;
     }
 
     public Integer getId() {
@@ -21,27 +21,27 @@ public class CategoryItem {
         this.id = id;
     }
 
-    public String getMovieName() {
-        return movieName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPosterUrl() {
+        return posterUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getTrailerUrl() {
+        return trailerUrl;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
     }
 }
