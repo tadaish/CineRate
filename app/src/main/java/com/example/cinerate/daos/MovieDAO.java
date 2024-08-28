@@ -89,6 +89,7 @@ public class MovieDAO {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Movie movie = new Movie(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("title")),
                         cursor.getString(cursor.getColumnIndexOrThrow("description")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("release_year")),
@@ -189,8 +190,7 @@ public class MovieDAO {
         values.put("release_year", movie.getRelease_year());
         values.put("director", movie.getDirector());
         values.put("poster_url", movie.getPosterUrl());
-        values.put("averageRating", movie.getAverageRating());
-        values.put("mainCast", movie.getMainCast());
+        values.put("main_cast", movie.getMainCast());
         values.put("trailer_url", movie.getTrailerUrl());
         values.put("language_id", movie.getLanguageId());
         values.put("genre_id", movie.getGenreId());

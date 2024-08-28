@@ -48,7 +48,6 @@ public class HomePageActivity extends AppCompatActivity {
         animeBannerList = new ArrayList<>();
 
         MovieDAO dao = new MovieDAO(this);
-        dao.open();
 
         List<Movie> movieList = dao.getAllMovies();
 

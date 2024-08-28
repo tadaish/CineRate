@@ -44,9 +44,6 @@ public class GenreFragment extends Fragment {
 
         ExtendedFloatingActionButton createGenBtn = view.findViewById(R.id.createGenBtn);
 
-
-
-
         genreList = AdminHomeActivity.genreDAO.getAllGenres();
         adapter = new GenreAdapter(genreList);
         RecyclerView recyclerView = view.findViewById(R.id.genList);

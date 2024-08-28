@@ -39,7 +39,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
         Language lang = languageList.get(position);
         holder.langNameTxt.setText(lang.getName());
 
-        int itemPosition = holder.getAdapterPosition();
+        int itemPosition = holder.getAbsoluteAdapterPosition();
 
         holder.langEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
             @Override
             public void onClick(View view) {
                 AdminHomeActivity.languageDAO.deleteLanguage(lang.getId());
-                languageList = AdminHomeActivity.languageDAO.getAllLanguages();
+                languageList.remove(itemPosition);
                 LanguageFragment.langAdapter.notifyItemRemoved(itemPosition);
             }
         });

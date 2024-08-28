@@ -33,7 +33,6 @@
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true">
 
-
         </activity>
         <meta-data
             android:name="preloaded_fonts"

@@ -18,6 +18,7 @@ import com.example.cinerate.R;
 import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.models.Genre;
 import com.example.cinerate.models.Language;
+import com.example.cinerate.models.Movie;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -40,6 +41,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         TextInputEditText txtMovieTitle = view.findViewById(R.id.txtMovieTitle);
         TextInputEditText txtMovieDes = view.findViewById(R.id.txtMovieDes);
         TextInputEditText txtMovieDirector = view.findViewById(R.id.txtMovieDirector);
@@ -73,7 +75,6 @@ public class MovieDetailFragment extends Fragment {
 
 
         Bundle bundle = getArguments();
-
         if (bundle != null) {
             movieTitle = bundle.getString("movieTitle");
             movieId = bundle.getInt("movieId");
@@ -90,27 +91,12 @@ public class MovieDetailFragment extends Fragment {
         }
 
 
-        movieGenDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Genre gen = (Genre) adapterView.getItemAtPosition(position);
-                genId = gen.getId();
-            }
-        });
-
-        movieLangDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Language lang = (Language) adapterView.getItemAtPosition(position);
-                langId = lang.getId();
-            }
-        });
-        Genre g = AdminHomeActivity.genreDAO.getGenreById(genId);
-        Language l = AdminHomeActivity.languageDAO.getLangById(langId);
-        genName = g.getName();
-        langName = l.getName();
-
         if (isEditMode) {
+            Genre g = AdminHomeActivity.genreDAO.getGenreById(genId);
+            Language l = AdminHomeActivity.languageDAO.getLangById(langId);
+            genName = g.getName();
+            langName = l.getName();
+
             txtMovieTitle.setText(movieTitle);
             txtMovieDes.setText(movieDes);
             txtMovieDirector.setText(movieDirector);
@@ -118,12 +104,65 @@ public class MovieDetailFragment extends Fragment {
             txtMovieTrailer.setText(trailerUrl);
             txtMoviePoster.setText(posterUrl);
             txtMovieYear.setText(String.valueOf(releaseYear));
-            movieGenDropDown.setText(genName);
-            movieLangDropDown.setText(langName);
+            movieGenDropDown.setText(genName, false);
+            movieLangDropDown.setText(langName, false);
             saveMovieBtn.setText("Sửa");
         }else {
             saveMovieBtn.setText("Thêm");
         }
+
+        movieGenDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                genName = movieGenDropDown.getText().toString();
+                genId = AdminHomeActivity.genreDAO.getGenIdByName(genName);
+
+            }
+        });
+
+        movieLangDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                langName = movieLangDropDown.getText().toString();
+                langId = AdminHomeActivity.languageDAO.getLangIdByName(langName);
+            }
+        });
+
+        saveMovieBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                movieTitle = txtMovieTitle.getText().toString();
+                movieDes = txtMovieDes.getText().toString();
+                movieDirector = txtMovieDirector.getText().toString();
+                movieCast = txtMovieCast.getText().toString();
+                releaseYear = Integer.valueOf(txtMovieYear.getText().toString());
+                trailerUrl = txtMovieTrailer.getText().toString();
+                posterUrl = txtMoviePoster.getText().toString();
+                if(isEditMode){
+                    Movie m = new Movie(movieId, movieTitle, movieDes, releaseYear, movieDirector, posterUrl, movieCast, trailerUrl, langId, genId);
+
+                    long rowsAffected = AdminHomeActivity.movieDAO.updateMovie(m);
+                    if(rowsAffected !=0){
+                        Toast.makeText(getContext(), "Sửa thành công!", Toast.LENGTH_SHORT).show();
+                        MovieFragment.movieList.set(moviePosition, m);
+                        MovieFragment.adapter.notifyItemChanged(moviePosition);
+                    }else {
+                        Toast.makeText(getContext(), "Lỗi!" + movieId, Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Movie m =  new Movie(movieTitle, movieDes, releaseYear, movieDirector, posterUrl, movieCast, trailerUrl, langId, genId);
+                    long result = AdminHomeActivity.movieDAO.addMovie(m);
+                    if(result != -1){
+                        Toast.makeText(getContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                        MovieFragment.movieList.add(m);
+                        MovieFragment.adapter.notifyItemInserted(MovieFragment.movieList.size() - 1);
+                    }else {
+                        Toast.makeText(getContext(), "Lỗi!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
 
     }
 }

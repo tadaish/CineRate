@@ -14,6 +14,19 @@ public class Movie {
     private int languageId;
     private int genreId;
 
+    public Movie(int id, String title, String description, int release_year, String director, String posterUrl, String mainCast, String trailerUrl, int languageId, int genreId){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.release_year = release_year;
+        this.director = director;
+        this.posterUrl = posterUrl;
+        this.mainCast = mainCast;
+        this.trailerUrl = trailerUrl;
+        this.languageId = languageId;
+        this.genreId = genreId;
+    }
+
     public Movie( String title, String description, int release_year, String director, String posterUrl, String mainCast, String trailerUrl, int languageId, int genreId){
         this.title = title;
         this.description = description;
