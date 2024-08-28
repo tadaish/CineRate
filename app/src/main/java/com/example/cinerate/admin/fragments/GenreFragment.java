@@ -45,13 +45,7 @@ public class GenreFragment extends Fragment {
         ExtendedFloatingActionButton createGenBtn = view.findViewById(R.id.createGenBtn);
 
 
-//        dao.addGenre(new Genre("Kinh dị"));
-//        dao.addGenre(new Genre("Hành động"));
-//        dao.addGenre(new Genre("Hài"));
-//        dao.addGenre(new Genre("Hoạt hình"));
-//        dao.addGenre(new Genre("Viễn tưởng"));
-//        dao.addGenre(new Genre("Lãng mạn"));
-//        dao.addGenre(new Genre("Chiến tranh"));
+
 
         genreList = AdminHomeActivity.genreDAO.getAllGenres();
         adapter = new GenreAdapter(genreList);

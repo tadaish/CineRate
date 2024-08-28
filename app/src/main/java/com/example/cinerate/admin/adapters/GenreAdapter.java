@@ -96,8 +96,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
             genEditBtn = itemView.findViewById(R.id.genEditBtn);
             genDelBtn = itemView.findViewById(R.id.genDelBtn);
         }
-
-
-
     }
+
+
 }

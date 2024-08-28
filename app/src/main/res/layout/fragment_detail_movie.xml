@@ -21,7 +21,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Tên phim"
                     android:inputType="text"
-                    />
+                    android:id="@+id/txtMovieTitle"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -37,7 +37,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:inputType="text"
-                    android:padding="20dp"/>
+                    android:padding="20dp"
+                    android:id="@+id/movieGenDropDown"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -53,7 +54,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:inputType="text"
-                    android:padding="20dp"/>
+                    android:padding="20dp"
+                    android:id="@+id/movieLangDropDown"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +69,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Đạo diễn"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:id="@+id/txtMovieDirector"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +85,23 @@
                     android:layout_height="wrap_content"
                     android:hint="Diễn viên"
                     android:inputType="text"
+                    android:id="@+id/txtMovieCast"
                     />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/mov_releaseYear"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/mov_cast">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Năm ra mắt"
+                    android:inputType="number"
+                    android:id="@+id/txtMovieYear" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -91,14 +110,15 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/mov_desc"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@id/mov_cast">
+                android:layout_below="@id/mov_releaseYear">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nội dung"
                     android:inputType="textMultiLine"
                     android:minLines="5"
-                    android:lines="10" />
+                    android:lines="10"
+                    android:id="@+id/txtMovieDes"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -112,7 +132,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Link trailer"
-                    android:inputType="textUri" />
+                    android:inputType="textUri"
+                    android:id="@+id/txtMovieTrailer"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -125,23 +146,16 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:drawableStart="@drawable/insert_photo"
                     android:drawableTint="@color/soft_blue"
-                    android:hint="Chọn poster phim"
-                    android:lines="4"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:hint="Link poster"
+                    android:inputType="textUri"
+                    android:id="@+id/txtMoviePoster"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thêm"
                 android:layout_below="@+id/mov_poster"
-                android:id="@+id/addMovieBtn"
+                android:id="@+id/saveMovieBtn"
                 android:layout_alignParentEnd="true"
                 android:backgroundTint="@color/soft_blue"/>
         </RelativeLayout>

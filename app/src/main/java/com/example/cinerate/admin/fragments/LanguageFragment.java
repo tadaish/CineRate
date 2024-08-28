@@ -44,9 +44,7 @@ public class LanguageFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 
-//        dao.addLanguage(new Language("Tiếng Việt"));
-//        dao.addLanguage(new Language("Tiếng Anh"));
-//        dao.addLanguage(new Language("Tiếng Nhật"));
+
 
         languageList = AdminHomeActivity.languageDAO.getAllLanguages();
         langAdapter = new LanguageAdapter(languageList);
