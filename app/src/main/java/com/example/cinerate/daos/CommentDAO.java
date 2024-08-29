@@ -23,10 +23,12 @@ public class CommentDAO {
 
     public List<Comment> getAllCommentsByMovie(int movie_id){
         List<Comment> cmts = new ArrayList<>();
+
         String query =  "SELECT * " +
-                        "FROM Comments c" +
-                        "INNER JOIN Movies m ON m.id = c.movie_id " +
-                        "WHERE c.id = ?";
+                "FROM Comments c " +
+                "INNER JOIN Movies m ON m.id = c.movie_id " +
+                "WHERE c.movie_id = ?";
+
         String[] selectionArgs = {String.valueOf(movie_id)};
         Cursor cursor = database.rawQuery(query, selectionArgs);
 

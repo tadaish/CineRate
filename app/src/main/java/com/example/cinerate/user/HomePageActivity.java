@@ -222,6 +222,8 @@ public class HomePageActivity extends AppCompatActivity {
         allCategoryList.add(new AllCategory(1, "Science Fiction",homeCatListItem1));
         allCategoryList.add(new AllCategory(2, "War Show",homeCatListItem2));
         allCategoryList.add(new AllCategory(3, "Anime",homeCatListItem3));
+        allCategoryList.add(new AllCategory(4, "Comedy",homeCatListItem2));
+        allCategoryList.add(new AllCategory(5, "Horror",homeCatListItem2));
 
         setMainRecycler(allCategoryList);
     }
