@@ -59,6 +59,8 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_admin_home);
 
+        sharedPreferences = getSharedPreferences("AdminAppPrefs", MODE_PRIVATE);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

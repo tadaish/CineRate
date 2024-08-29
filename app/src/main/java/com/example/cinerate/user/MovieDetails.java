@@ -99,7 +99,7 @@ public class MovieDetails extends AppCompatActivity {
 
         User loggedInUser = getLoggedInUser(); // Lấy thông tin người dùng đã đăng nhập
         if (loggedInUser != null) {
-            SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("LoggedInUserId", loggedInUser.getId()); // Lưu ID người dùng
             editor.apply();
@@ -156,7 +156,7 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     private int getLoggedInUserId() {
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("LoggedInUserId", -1);
     }
 

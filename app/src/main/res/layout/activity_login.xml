@@ -69,7 +69,6 @@
             android:text=" Đăng ký"
             android:textColor="@color/soft_blue"
             android:textStyle="bold"
-            android:textAppearance=""
             android:clickable="true"
             android:textSize="15sp"
             android:id="@+id/registerButton"/>
