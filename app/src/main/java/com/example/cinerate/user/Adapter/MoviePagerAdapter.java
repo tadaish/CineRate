@@ -2,6 +2,7 @@ package com.example.cinerate.user.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,8 @@ public class MoviePagerAdapter extends PagerAdapter {
         bannerImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("MovieID", "Movie ID being passed: " + moviesList.get(position).getId());
+
                 Intent i = new Intent(context, MovieDetails.class);
                 i.putExtra("movieId", moviesList.get(position).getId());
                 i.putExtra("movieName", moviesList.get(position).getTitle());
@@ -65,7 +68,9 @@ public class MoviePagerAdapter extends PagerAdapter {
                 i.putExtra("trailerUrl", moviesList.get(position).getTrailerUrl());
                 context.startActivity(i);
             }
-        });
+        }) ;
         return view;
+
     }
+
 }

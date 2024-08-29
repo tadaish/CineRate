@@ -24,7 +24,10 @@
             android:name=".user.HomePageActivity"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true" >
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".user.LoginActivity"
@@ -36,10 +39,7 @@
             android:name=".admin.AdminHomeActivity"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <meta-data
             android:name="preloaded_fonts"

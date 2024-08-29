@@ -37,8 +37,8 @@
 
     <LinearLayout
         android:id="@+id/comment_section"
-        android:layout_width="403dp"
-        android:layout_height="361dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,26 +54,38 @@
             android:layout_height="wrap_content"
             android:text="Comments"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comment_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_height="200dp"
+            android:layout_marginTop="4dp"
+            android:textColor="#FFFFFF"
+            android:background="#1F2D35" />
 
         <EditText
             android:id="@+id/comment_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your comment" />
+            android:layout_marginTop="4dp"
+            android:background="#2C3E50"
+            android:hint="Enter your comment"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#ECE3E3" />
 
         <Button
             android:id="@+id/post_comment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Post Comment" />
+            android:background="#3498DB"
+            android:text="Post Comment"
+            android:textColor="#FFFFFF"
+            android:textColorLink="@color/marengo" />
     </LinearLayout>
 
 

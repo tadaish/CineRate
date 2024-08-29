@@ -2,6 +2,7 @@ package com.example.cinerate.user.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,6 @@ import com.bumptech.glide.Glide;
 import com.example.cinerate.R;
 import com.example.cinerate.daos.MovieDAO;
 import com.example.cinerate.models.Movie;
-import com.example.cinerate.user.CategoryItem;
-import com.example.cinerate.user.HomePageActivity;
 import com.example.cinerate.user.MovieDetails;
 
 import java.util.List;
@@ -46,8 +45,11 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.itemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 int adapterPosition = holder.getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
+                    Log.d("MovieID", "Movie ID being passed: " + moviesList.get(adapterPosition).getId());
+
                     Intent i = new Intent(context, MovieDetails.class);
                     i.putExtra("movieId", moviesList.get(adapterPosition).getId());
                     i.putExtra("movieName", moviesList.get(adapterPosition).getTitle());
@@ -55,8 +57,11 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     i.putExtra("trailerUrl", moviesList.get(adapterPosition).getTrailerUrl());
                     context.startActivity(i);
                 }
+
             }
+
         });
+        Log.d("MovieID", "Movie ID being passed: " + moviesList.get(position).getId());
     }
 
     @Override

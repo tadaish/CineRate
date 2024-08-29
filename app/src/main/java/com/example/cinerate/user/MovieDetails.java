@@ -16,7 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cinerate.R;
 import com.example.cinerate.daos.CommentDAO;
+import com.example.cinerate.daos.UserDAO;
 import com.example.cinerate.models.Comment;
+import com.example.cinerate.models.User;
 import com.example.cinerate.user.Adapter.CommentAdapter;
 import com.example.cinerate.utils.YouTubeUtils;
 import android.text.TextUtils;
@@ -35,8 +37,18 @@ public class MovieDetails extends AppCompatActivity {
     CommentDAO commentDAO;
     List<Comment> commentsList;
     CommentAdapter commentAdapter;
+    public static UserDAO userDAO;
 
-    String mId, mName, mImage, mTrailerUrl;
+    Integer mId;
+    String mName, mImage, mTrailerUrl;
+
+    private User getLoggedInUser() {
+        int userId = getLoggedInUserId(); // Lấy ID của người dùng từ SharedPreferences
+        if (userId != -1) {
+            return userDAO.getUserId(userId); // Lấy thông tin người dùng từ UserDAO
+        }
+        return null;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,14 +62,18 @@ public class MovieDetails extends AppCompatActivity {
         commentInput = findViewById(R.id.comment_input);
 
         commentDAO = new CommentDAO(this);
+        userDAO = new UserDAO(this);
+
+        User loggedInUser = getLoggedInUser(); // Lấy thông tin người dùng đã đăng nhập
+        if (loggedInUser != null) {
+            SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("LoggedInUserId", loggedInUser.getId()); // Lưu ID người dùng
+            editor.apply();
+        }
 
         // Load movie details and trailer
-        mId = getIntent().getStringExtra("movieId");
-        if (mId == null || mId.isEmpty()) {
-            Toast.makeText(this, "Movie ID is missing", Toast.LENGTH_SHORT).show();
-            finish(); // Hoặc thực hiện các hành động phù hợp khác
-            return;
-        }
+        mId = getIntent().getIntExtra("movieId", -1);
         mName = getIntent().getStringExtra("movieName");
         mImage = getIntent().getStringExtra("poster_url");
         mTrailerUrl = getIntent().getStringExtra("trailerUrl");
@@ -73,7 +89,7 @@ public class MovieDetails extends AppCompatActivity {
             String commentContent = commentInput.getText().toString().trim();
 
             if (userId != -1 && !TextUtils.isEmpty(commentContent)) {
-                Comment newComment = new Comment(0, Integer.parseInt(mId), userId, commentContent, ""); // Bỏ qua created_at
+                Comment newComment = new Comment(0, mId, userId, commentContent, ""); // Bỏ qua created_at
                 commentDAO.addComment(newComment);
                 commentInput.setText(""); // Clear input field
                 loadComments(); // Reload comments
@@ -84,7 +100,7 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     private void loadComments() {
-        commentsList = commentDAO.getAllCommentsByMovie(Integer.parseInt(mId));
+        commentsList = commentDAO.getAllCommentsByMovie(mId);
         commentAdapter = new CommentAdapter(commentsList);
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentRecyclerView.setAdapter(commentAdapter);
