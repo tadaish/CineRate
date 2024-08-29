@@ -199,31 +199,18 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        List<Movie> homeCatListItem1 = new ArrayList<>();
-        for (Movie movie : movieList) {
-            if (movie.getGenreId() == 5) {
-                homeCatListItem1.add(movie);
-            }
-        }
-        List<Movie> homeCatListItem2 = new ArrayList<>();
-        for (Movie movie : movieList) {
-            if (movie.getGenreId() == 7) {
-                homeCatListItem2.add(movie);
-            }
-        }
-        List<Movie> homeCatListItem3 = new ArrayList<>();
-        for (Movie movie : movieList) {
-            if (movie.getGenreId() == 4) {
-                homeCatListItem3.add(movie);
-            }
-        }
+        List<AllCategory> allCategoryList = new ArrayList<>();
+        String[] categoryNames = {"Kinh dị", "Hành động", "Hài", "Hoạt hình", "Viễn tưởng", "Lãng mạn", "Chiến tranh"};
 
-        allCategoryList = new ArrayList<>();
-        allCategoryList.add(new AllCategory(1, "Science Fiction",homeCatListItem1));
-        allCategoryList.add(new AllCategory(2, "War Show",homeCatListItem2));
-        allCategoryList.add(new AllCategory(3, "Anime",homeCatListItem3));
-        allCategoryList.add(new AllCategory(4, "Comedy",homeCatListItem2));
-        allCategoryList.add(new AllCategory(5, "Horror",homeCatListItem2));
+        for (int i = 1; i <= 7; i++) {
+            List<Movie> filteredMovies = new ArrayList<>();
+            for (Movie movie : movieList) {
+                if (movie.getGenreId() == i) {
+                    filteredMovies.add(movie);
+                }
+            }
+            allCategoryList.add(new AllCategory(i, categoryNames[i - 1], filteredMovies));
+        }
 
         setMainRecycler(allCategoryList);
     }

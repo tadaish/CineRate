@@ -65,6 +65,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        Button registerButton = findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean validateLogin(String username, String password) {
