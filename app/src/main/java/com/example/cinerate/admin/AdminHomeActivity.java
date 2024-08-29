@@ -1,5 +1,7 @@
 package com.example.cinerate.admin;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ import com.example.cinerate.models.Language;
 import com.example.cinerate.models.Movie;
 import com.example.cinerate.models.Rating;
 import com.example.cinerate.models.User;
+import com.example.cinerate.user.HomePageActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -48,6 +51,7 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
     public static  UserDAO userDAO;
     public static  CommentDAO commentDAO;
     public static  RatingDAO ratingDAO;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +115,14 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment()).commit();
             toolbarTitle.setText("User");
         }else if (itemId == R.id.nav_logout){
-            Toast.makeText(this,  "Logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("LoggedInAdminId");
+            editor.remove("LoggedInAdminName");
+            editor.apply();
+
+            Intent intent = new Intent(AdminHomeActivity.this, HomePageActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

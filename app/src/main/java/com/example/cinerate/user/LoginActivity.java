@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.daos.UserDAO;
 import com.example.cinerate.models.User;
 import com.example.cinerate.utils.PasswordUtils;
@@ -44,19 +45,28 @@ public class LoginActivity extends AppCompatActivity {
                     if (user != null && PasswordUtils.verifyPassword(password, user.getPassword())) {
                         Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
 
+
                         // Lưu ID người dùng vào SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("LoggedInUserId", user.getId());
-                        editor.putString("LoggedInUserName", user.getUsername());
-                        editor.apply();
+                        if(user.getRole().equals("user")){
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("LoggedInUserId", user.getId());
+                            editor.putString("LoggedInUserName", user.getUsername());
+                            editor.apply();
 
-                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                            startActivity(intent);
+                        }else{
+                            SharedPreferences adminSharedPref = getSharedPreferences("AdminAppPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = adminSharedPref.edit();
+                            editor.putInt("LoggedInAdminId", user.getId());
+                            editor.putString("LoggedInAdminName", user.getUsername());
+                            editor.apply();
 
-                        // Chuyển đến HomePageActivity
-                        Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                        startActivity(intent);
-                        finish(); // Kết thúc LoginActivity
+                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                            startActivity(intent);
+                        }
+                        finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                     }
