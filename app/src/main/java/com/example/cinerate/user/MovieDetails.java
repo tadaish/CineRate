@@ -113,10 +113,13 @@ public class MovieDetails extends AppCompatActivity {
 
     private void setupTrailerWebView(String trailerUrl) {
         String videoId = YouTubeUtils.extractVideoId(trailerUrl);
-        String iframeCode = "<html><body style=\"margin:0;padding:0;\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/"
-                + videoId + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+        String iframeCode = "<html><body style=\"margin:0;padding:0;\"><iframe width=\"100%\" height=\"100%\" "
+                + "src=\"https://www.youtube.com/embed/" + videoId
+                + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
 
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient());
         webView.loadData(iframeCode, "text/html", "UTF-8");
     }
 }

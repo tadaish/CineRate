@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cinerate.R;
+import com.example.cinerate.admin.AdminHomeActivity;
 import com.example.cinerate.daos.UserDAO;
 import com.example.cinerate.models.User;
 import com.example.cinerate.utils.PasswordUtils;
@@ -51,12 +52,15 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("LoggedInUserName", user.getUsername());
                         editor.apply();
 
-                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                        if ("admin".equalsIgnoreCase(user.getRole())) {
+                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+                            startActivity(intent);
+                        }
 
-                        // Chuyển đến HomePageActivity
-                        Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                        startActivity(intent);
-                        finish(); // Kết thúc LoginActivity
+                        finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                     }
