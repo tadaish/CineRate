@@ -17,38 +17,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/movie_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Movie Name"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/movie_trailer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
-
     <Button
-        android:id="@+id/play_button"
+        android:id="@+id/watch_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/play_btn_bg"
-        android:drawableLeft="@drawable/baseline_play_arrow_24"
+        android:drawableLeft="@drawable/add"
         android:paddingLeft="16dp"
-        android:text="Start Over"
+        android:text="Watch List"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/movie_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/movie_trailer" />
+
+    <LinearLayout
+        android:id="@+id/comment_section"
+        android:layout_width="403dp"
+        android:layout_height="361dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_trailer"
+        app:layout_constraintVertical_bias="0.765">
+
+        <TextView
+            android:id="@+id/comment_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comments"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/comment_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your comment" />
+
+        <Button
+            android:id="@+id/post_comment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Post Comment" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
