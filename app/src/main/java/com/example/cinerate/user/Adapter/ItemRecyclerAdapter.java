@@ -40,7 +40,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder,final int position) {
         Movie movie = moviesList.get(position);
-        Glide.with(context).load(movie.getPosterUrl()).into(holder.itemImage);
+        Glide.with(context).load(movie.getPosterUrl()).centerInside().into(holder.itemImage);
 
         holder.itemImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +51,14 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     Log.d("MovieID", "Movie ID being passed: " + moviesList.get(adapterPosition).getId());
 
                     Intent i = new Intent(context, MovieDetails.class);
-                    i.putExtra("movieId", moviesList.get(adapterPosition).getId());
-                    i.putExtra("movieName", moviesList.get(adapterPosition).getTitle());
-                    i.putExtra("poster_url", moviesList.get(adapterPosition).getPosterUrl());
-                    i.putExtra("trailerUrl", moviesList.get(adapterPosition).getTrailerUrl());
+                    i.putExtra("movieId", moviesList.get(position).getId());
+                    i.putExtra("movieName", moviesList.get(position).getTitle());
+                    i.putExtra("movieDes", moviesList.get(position).getDescription());
+                    i.putExtra("movieCast", moviesList.get(position).getMainCast());
+                    i.putExtra("movieDirector", moviesList.get(position).getDirector());
+                    i.putExtra("releaseYear", moviesList.get(position).getRelease_year());
+                    i.putExtra("poster_url", moviesList.get(position).getPosterUrl());
+                    i.putExtra("trailerUrl", moviesList.get(position).getTrailerUrl());
                     context.startActivity(i);
                 }
 

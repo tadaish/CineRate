@@ -1,92 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_detail_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0F171E"
-    tools:context=".user.MovieDetails">
+    tools:context=".user.MovieDetails"
+    android:padding="16dp">
 
-    <WebView
-        android:id="@+id/movie_trailer"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/movieDetailLayout"
 
-    <Button
-        android:id="@+id/watch_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/play_btn_bg"
-        android:drawableLeft="@drawable/add"
-        android:paddingLeft="16dp"
-        android:text="Watch List"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movie_trailer" />
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.6">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:id="@+id/txtTitle"/>
 
-    <LinearLayout
-        android:id="@+id/comment_section"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_trailer"
-        app:layout_constraintVertical_bias="0.765">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đạo diễn:"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="director"
+                        android:textColor="@color/soft_grey"
+                        android:layout_marginStart="10dp"
+                        android:textSize="15sp"
+                        android:id="@+id/txtDirector"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diễn viên:"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cast"
+                        android:textColor="@color/soft_grey"
+                        android:textSize="15sp"
+                        android:id="@+id/txtCast"
+                        android:lines="3"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="year"
+                        android:textColor="@color/soft_grey"
+                        android:textSize="20sp"
+                        android:id="@+id/txtYear"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.4"
+                android:id="@+id/moviePosterImageView"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movieDetailLayout"
+            android:orientation="vertical"
+            android:id="@+id/movieDesLayout"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tóm tắt nội dung:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="des"
+                android:textColor="@color/soft_grey"
+                android:textSize="15sp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:id="@+id/txtDescription"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem thêm"
+                android:textSize="20sp"
+                android:textColor="@color/soft_grey"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:id="@+id/toggleBtn"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/comment_header"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comments"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"/>
+            android:text="Trailer:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_below="@id/movieDesLayout"
+            android:id="@+id/trailerLabel"
+            android:layout_marginTop="10dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comment_recycler_view"
+        <WebView
+            android:id="@+id/movie_trailer"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="4dp"
-            android:textColor="#FFFFFF"
-            android:background="#1F2D35" />
-
-        <EditText
-            android:id="@+id/comment_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="#2C3E50"
-            android:hint="Enter your comment"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#ECE3E3" />
+            android:layout_below="@id/trailerLabel"/>
 
         <Button
-            android:id="@+id/post_comment_button"
-            android:layout_width="wrap_content"
+            android:id="@+id/watch_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="#3498DB"
-            android:text="Post Comment"
+            android:layout_marginTop="16dp"
+
+            android:background="@drawable/play_btn_bg"
+            android:drawableLeft="@drawable/add"
+            android:paddingLeft="16dp"
+            android:text="Watch List"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textColorLink="@color/marengo" />
-    </LinearLayout>
+            android:layout_below="@id/movie_trailer" />
+
+        <LinearLayout
+            android:id="@+id/comment_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/watch_list">
+            <TextView
+                android:id="@+id/comment_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"/>
+
+            <EditText
+                android:id="@+id/comment_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="#2C3E50"
+                android:hint="Enter your comment"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#ECE3E3"
+                android:lines="5"
+                android:gravity="start"/>
+
+            <Button
+                android:id="@+id/post_comment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#3498DB"
+                android:text="Post Comment"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:textColorLink="@color/marengo"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comment_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                android:background="#1F2D35" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -129,8 +129,6 @@ public class HomePageActivity extends AppCompatActivity {
             Toast.makeText(HomePageActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
         });
 
-        //mo CSDL
-        DatabaseManager.getInstance(this).open();
 
         //khoi tao cac lop Data-Acess-Object
         movieDAO = new MovieDAO(this);
