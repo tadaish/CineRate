@@ -55,7 +55,6 @@ public class MovieDetails extends AppCompatActivity {
         }
         return null;
     }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +66,8 @@ public class MovieDetails extends AppCompatActivity {
         commentRecyclerView = findViewById(R.id.comment_recycler_view);
         commentInput = findViewById(R.id.comment_input);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-      
+        SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
+
         txtTitle = findViewById(R.id.txtTitle);
         txtDirector = findViewById(R.id.txtDirector);
         txtCast = findViewById(R.id.txtCast);
@@ -82,12 +81,10 @@ public class MovieDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isExpanded) {
-                    // Thu gọn nội dung
                     txtDes.setMaxLines(3);
                     txtDes.setEllipsize(TextUtils.TruncateAt.END);
                     toggleBtn.setText("Xem thêm");
                 } else {
-                    // Mở rộng nội dung
                     txtDes.setMaxLines(Integer.MAX_VALUE);
                     txtDes.setEllipsize(null);
                     toggleBtn.setText("Thu gọn");
@@ -121,13 +118,16 @@ public class MovieDetails extends AppCompatActivity {
         txtYear.setText(String.valueOf(mYear));
         txtDes.setText(mDes);
 
+        if (mPoster != null) {
+            Glide.with(this)
+                    .load(mPoster)
+                    .centerCrop()
+                    .into(moviePosterImageView);
+        }
 
-        Glide.with(this)
-                .load(mPoster)
-                .centerCrop()
-                .into(moviePosterImageView);
-
-        setupTrailerWebView(mTrailerUrl);
+        if (mTrailerUrl != null) {
+            setupTrailerWebView(mTrailerUrl);
+        }
 
         loadComments();
 
@@ -141,13 +141,12 @@ public class MovieDetails extends AppCompatActivity {
                 commentInput.setText("");
                 loadComments();
             } else {
-                Toast.makeText(this, "Please log in and enter a comment.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please log in and enter a comment!", Toast.LENGTH_SHORT).show();
             }
         });
 
         Intent intent = getIntent();
         mId = intent.getIntExtra("movieId", -1);
-
         int currentUserId = sharedPreferences.getInt("LoggedInUserId", -1);
         String currentUsername = sharedPreferences.getString("LoggedInUserName", null);
 

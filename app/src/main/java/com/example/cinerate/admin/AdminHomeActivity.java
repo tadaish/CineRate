@@ -92,7 +92,7 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
         userDAO = new UserDAO(this);
 
 
-//        Data.loadData();
+        Data.loadData();
 
 
 

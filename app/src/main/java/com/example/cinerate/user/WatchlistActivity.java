@@ -29,7 +29,7 @@ public class WatchlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlist);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
         String currentUsername = sharedPreferences.getString("LoggedInUserName", null);
 
         if (currentUsername == null) {
