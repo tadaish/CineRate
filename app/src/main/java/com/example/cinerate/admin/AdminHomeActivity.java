@@ -80,7 +80,8 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
             navigationView.setCheckedItem(R.id.nav_dashboard);
         }
 
-//        deleteDatabase("cinerate.db");
+//         deleteDatabase("cinerate.db");
+
 
 
         //khoi tao cac lop Data-Acess-Object
@@ -92,7 +93,7 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
         userDAO = new UserDAO(this);
 
 
-        Data.loadData();
+//        Data.loadData();
 
 
 

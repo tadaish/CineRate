@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import com.example.cinerate.R;
+import com.example.cinerate.admin.Data;
 import com.example.cinerate.daos.CommentDAO;
 import com.example.cinerate.daos.GenreDAO;
 import com.example.cinerate.daos.LanguageDAO;
@@ -101,6 +102,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
 
+
         userDAO = new UserDAO(this);
         sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
 
@@ -150,7 +152,6 @@ public class HomePageActivity extends AppCompatActivity {
         });
 
         //mo CSDL
-        DatabaseManager.getInstance(this).open();
 
         //khoi tao cac lop Data-Acess-Object
         movieDAO = new MovieDAO(this);
@@ -158,6 +159,7 @@ public class HomePageActivity extends AppCompatActivity {
         languageDAO = new LanguageDAO(this);
         commentDAO = new CommentDAO(this);
         ratingDAO = new RatingDAO(this);
+
 
         updateUI();
 
@@ -167,6 +169,9 @@ public class HomePageActivity extends AppCompatActivity {
         homeBannerList = new ArrayList<>();
         entertainmentList = new ArrayList<>();
         popularInterestList = new ArrayList<>();
+
+        Data data = new Data(this);
+        data.loadData();
 
         movieList = HomePageActivity.movieDAO.getAllMovies();
 
@@ -278,4 +283,5 @@ public class HomePageActivity extends AppCompatActivity {
         mainRecyclerAdapter = new MainRecyclerAdapter(this, allCategoryList);
         mainRecycler.setAdapter(mainRecyclerAdapter);
     }
+
 }
