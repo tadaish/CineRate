@@ -43,17 +43,17 @@ public class RegisterActivity extends AppCompatActivity {
                         User newUser = new User(username, password,  "user");
                         userDAO.addUser(newUser);
 
-                        Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
 
                         // Chuyển về trang đăng nhập
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Username already exists.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Username đã có", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Hãy điền vào tất cả các ô", Toast.LENGTH_SHORT).show();
                 }
             }
         });

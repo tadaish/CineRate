@@ -23,7 +23,6 @@ public class YouTubeUtils {
                 videoId = parts[1];
             }
         }
-
         // Loại bỏ các tham số sau ID video
         if (videoId != null) {
             int index = videoId.indexOf('&');
@@ -31,7 +30,6 @@ public class YouTubeUtils {
                 videoId = videoId.substring(0, index);
             }
         }
-
         return videoId;
     }
 }

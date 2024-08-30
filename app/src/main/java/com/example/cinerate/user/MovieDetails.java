@@ -1,15 +1,13 @@
 package com.example.cinerate.user;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,9 +41,9 @@ public class MovieDetails extends AppCompatActivity {
     String mName, mImage, mTrailerUrl;
 
     private User getLoggedInUser() {
-        int userId = getLoggedInUserId(); // Lấy ID của người dùng từ SharedPreferences
+        int userId = getLoggedInUserId();
         if (userId != -1) {
-            return userDAO.getUserId(userId); // Lấy thông tin người dùng từ UserDAO
+            return userDAO.getUserId(userId);
         }
         return null;
     }
@@ -64,15 +62,14 @@ public class MovieDetails extends AppCompatActivity {
         commentDAO = new CommentDAO(this);
         userDAO = new UserDAO(this);
 
-        User loggedInUser = getLoggedInUser(); // Lấy thông tin người dùng đã đăng nhập
+        User loggedInUser = getLoggedInUser();
         if (loggedInUser != null) {
             SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("LoggedInUserId", loggedInUser.getId()); // Lưu ID người dùng
+            editor.putInt("LoggedInUserId", loggedInUser.getId());
             editor.apply();
         }
 
-        // Load movie details and trailer
         mId = getIntent().getIntExtra("movieId", -1);
         mName = getIntent().getStringExtra("movieName");
         mImage = getIntent().getStringExtra("poster_url");
@@ -80,23 +77,49 @@ public class MovieDetails extends AppCompatActivity {
 
         setupTrailerWebView(mTrailerUrl);
 
-        // Load comments for this movie
         loadComments();
 
-        // Post comment functionality
         postCommentButton.setOnClickListener(v -> {
-            int userId = getLoggedInUserId(); // Lấy ID của người dùng đăng nhập
+            int userId = getLoggedInUserId();
             String commentContent = commentInput.getText().toString().trim();
 
             if (userId != -1 && !TextUtils.isEmpty(commentContent)) {
-                Comment newComment = new Comment(0, mId, userId, commentContent, ""); // Bỏ qua created_at
+                Comment newComment = new Comment(0, mId, userId, commentContent, "");
                 commentDAO.addComment(newComment);
-                commentInput.setText(""); // Clear input field
-                loadComments(); // Reload comments
+                commentInput.setText("");
+                loadComments();
             } else {
                 Toast.makeText(this, "Please log in and enter a comment.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Intent intent = getIntent();
+        mId = intent.getIntExtra("movieId", -1);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        int currentUserId = sharedPreferences.getInt("LoggedInUserId", -1);
+        String currentUsername = sharedPreferences.getString("LoggedInUserName", null);
+
+        userDAO = new UserDAO(this);
+
+        if (currentUsername != null && currentUserId != -1 && mId != -1) {
+            User currentUser = userDAO.getUserByUsername(currentUsername);
+
+            if (currentUser != null) {
+                Button watchListButton = findViewById(R.id.watch_list);
+                watchListButton.setOnClickListener(v -> {
+                    if (currentUser != null) {
+                        currentUser.addMovieToWatchlist(mId);
+                        userDAO.updateUser(currentUser);
+                        Toast.makeText(this, "Đã thêm vào Watchlist!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Hãy đăng nhập trước", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Người dùng không hợp lệ", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void loadComments() {
@@ -122,6 +145,7 @@ public class MovieDetails extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadData(iframeCode, "text/html", "UTF-8");
     }
+
 }
 
 

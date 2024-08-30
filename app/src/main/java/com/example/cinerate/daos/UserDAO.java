@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.cinerate.helper.CinaRateHelper;
@@ -56,6 +57,15 @@ public class UserDAO {
                     cursor.getString(cursor.getColumnIndexOrThrow("password")),
                     cursor.getString(cursor.getColumnIndexOrThrow("role"))
             );
+            String watchlistStr = cursor.getString(cursor.getColumnIndexOrThrow("watchlist"));
+            List<Integer> watchlist = new ArrayList<>();
+            if (watchlistStr != null && !watchlistStr.isEmpty()) {
+                String[] movieIds = watchlistStr.split(",");
+                for (String id : movieIds) {
+                    watchlist.add(Integer.parseInt(id));
+                }
+            }
+            user.setWatchlist(watchlist);
             cursor.close();
         }
         return user;
@@ -89,6 +99,7 @@ public class UserDAO {
         values.put("username", user.getUsername());
         values.put("password", hashedPassword);
         values.put("role", user.getRole());
+        values.put("watchlist", TextUtils.join(",", user.getWatchlist()));
 
         long result = -1;
         try {
@@ -114,6 +125,12 @@ public class UserDAO {
         values.put("username", user.getUsername());
         values.put("password", PasswordUtils.hashPassword(user.getPassword()));
         values.put("role", user.getRole());
+
+        List<Integer> watchlist = user.getWatchlist();
+        if (watchlist == null) {
+            watchlist = new ArrayList<>();
+        }
+        values.put("watchlist", TextUtils.join(",", watchlist));
 
         String whereCls = "id = ?";
         String[] whereArgs = {String.valueOf(user.getId())};

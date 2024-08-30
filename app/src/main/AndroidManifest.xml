@@ -40,6 +40,12 @@
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
 
+        <activity android:name=".user.WatchlistActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.Light.NoActionBar">
+
+        </activity>
+
         <activity
             android:name=".admin.AdminHomeActivity"
             android:exported="true"
