@@ -58,13 +58,13 @@ public class MovieDetails extends AppCompatActivity {
         postCommentButton = findViewById(R.id.post_comment_button);
         commentRecyclerView = findViewById(R.id.comment_recycler_view);
         commentInput = findViewById(R.id.comment_input);
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
         commentDAO = new CommentDAO(this);
         userDAO = new UserDAO(this);
 
         User loggedInUser = getLoggedInUser();
         if (loggedInUser != null) {
-            SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("LoggedInUserId", loggedInUser.getId());
             editor.apply();
@@ -96,29 +96,23 @@ public class MovieDetails extends AppCompatActivity {
         Intent intent = getIntent();
         mId = intent.getIntExtra("movieId", -1);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         int currentUserId = sharedPreferences.getInt("LoggedInUserId", -1);
         String currentUsername = sharedPreferences.getString("LoggedInUserName", null);
 
-        userDAO = new UserDAO(this);
-
-        if (currentUsername != null && currentUserId != -1 && mId != -1) {
+        if (currentUsername != null && currentUserId != -1) {
             User currentUser = userDAO.getUserByUsername(currentUsername);
-
             if (currentUser != null) {
                 Button watchListButton = findViewById(R.id.watch_list);
                 watchListButton.setOnClickListener(v -> {
-                    if (currentUser != null) {
-                        currentUser.addMovieToWatchlist(mId);
-                        userDAO.updateUser(currentUser);
-                        Toast.makeText(this, "Đã thêm vào Watchlist!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Hãy đăng nhập trước", Toast.LENGTH_SHORT).show();
-                    }
+                    currentUser.addMovieToWatchlist(mId);
+                    userDAO.updateUser(currentUser);
+                    Toast.makeText(this, "Đã thêm vào Watchlist!", Toast.LENGTH_SHORT).show();
                 });
             } else {
-                Toast.makeText(this, "Người dùng không hợp lệ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Không tìm thấy người dùng.", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(this, "Hãy đăng nhập trước.", Toast.LENGTH_SHORT).show();
         }
     }
 

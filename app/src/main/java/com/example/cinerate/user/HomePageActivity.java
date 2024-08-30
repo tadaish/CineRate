@@ -109,6 +109,7 @@ public class HomePageActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         myListButton = findViewById(R.id.myListButton);
 
+
         updateUI();
         // Xử lý login
         loginButton.setOnClickListener(v -> {
@@ -129,6 +130,23 @@ public class HomePageActivity extends AppCompatActivity {
             // Cập nhật giao diện
             updateUI();
             Toast.makeText(HomePageActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+        });
+
+        currentUsername = sharedPreferences.getString("LoggedInUserName", null);
+
+        myListButton.setOnClickListener(v -> {
+            int userId = getLoggedInUserId();
+            String username = sharedPreferences.getString("LoggedInUserName", null);
+
+            if (userId != -1 && username != null) {
+                Intent intent = new Intent(HomePageActivity.this, WatchlistActivity.class);
+                intent.putExtra("currentUsername", username);
+                startActivity(intent);
+            } else {
+                Toast.makeText(HomePageActivity.this, "Vui lòng đăng nhập để truy cập MyList.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
         });
 
         //mo CSDL
@@ -222,22 +240,6 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        currentUsername = sharedPreferences.getString("LoggedInUserName", null);
-
-        myListButton.setOnClickListener(v -> {
-            int userId = getLoggedInUserId();
-            if (userId != -1) {
-                Intent intent = new Intent(HomePageActivity.this, WatchlistActivity.class);
-                String username = sharedPreferences.getString("LoggedInUserName", "");
-                intent.putExtra("currentUsername", username);
-                startActivity(intent);
-            } else {
-                Toast.makeText(HomePageActivity.this, "Vui lòng đăng nhập để truy cập MyList.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void setMoviePagerAdapter(List<Movie> bannerMoviesList) {
