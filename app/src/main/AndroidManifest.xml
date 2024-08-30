@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CineRate"
         tools:targetApi="31">
         <activity
+            android:name=".user.RatingActivity"
+            android:exported="false" />
+        <activity
             android:name=".user.MovieDetails"
             android:exported="false"
             android:label="@string/title_activity_movie_details"
@@ -26,26 +29,23 @@
             android:theme="@style/Theme.Material3.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".user.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
-
-        <activity android:name=".user.RegisterActivity"
+        <activity
+            android:name=".user.RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
 
         <activity
             android:name=".admin.AdminHomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.Light.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -53,7 +53,7 @@ public class MoviePagerAdapter extends PagerAdapter {
         ImageView bannerImage = view.findViewById(R.id.banner_image);
         Movie movie = moviesList.get(position);
 
-        Glide.with(context).load(movie.getPosterUrl()).into(bannerImage);
+        Glide.with(context).load(movie.getPosterUrl()).centerInside().into(bannerImage);
         container.addView(view);
 
         bannerImage.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +64,10 @@ public class MoviePagerAdapter extends PagerAdapter {
                 Intent i = new Intent(context, MovieDetails.class);
                 i.putExtra("movieId", moviesList.get(position).getId());
                 i.putExtra("movieName", moviesList.get(position).getTitle());
+                i.putExtra("movieDes", moviesList.get(position).getDescription());
+                i.putExtra("movieCast", moviesList.get(position).getMainCast());
+                i.putExtra("movieDirector", moviesList.get(position).getDirector());
+                i.putExtra("releaseYear", moviesList.get(position).getRelease_year());
                 i.putExtra("poster_url", moviesList.get(position).getPosterUrl());
                 i.putExtra("trailerUrl", moviesList.get(position).getTrailerUrl());
                 context.startActivity(i);
