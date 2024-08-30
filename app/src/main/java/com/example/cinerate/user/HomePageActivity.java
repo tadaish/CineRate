@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -25,7 +24,6 @@ import com.example.cinerate.models.Movie;
 import com.example.cinerate.models.User;
 import com.example.cinerate.user.Adapter.MainRecyclerAdapter;
 import com.example.cinerate.user.Adapter.MoviePagerAdapter;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -44,9 +42,8 @@ public class HomePageActivity extends AppCompatActivity {
     TextView welcomeTextView;
 
     List<Movie> homeBannerList;
-    List<Movie> tvShowBannerList;
-    List<Movie> movieBannerList;
-    List<Movie> animeBannerList;
+    List<Movie> entertainmentList;
+    List<Movie> popularInterestList;
     public static List<Movie> movieList;
 
     public static MovieDAO movieDAO;
@@ -58,7 +55,6 @@ public class HomePageActivity extends AppCompatActivity {
 
     MainRecyclerAdapter mainRecyclerAdapter;
     RecyclerView mainRecycler;
-    List<AllCategory> allCategoryList;
 
     private int getLoggedInUserId() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
@@ -143,49 +139,71 @@ public class HomePageActivity extends AppCompatActivity {
         categoryTab = findViewById(R.id.tabLayout);
 
         homeBannerList = new ArrayList<>();
-        tvShowBannerList = new ArrayList<>();
-        movieBannerList = new ArrayList<>();
-        animeBannerList = new ArrayList<>();
+        entertainmentList = new ArrayList<>();
+        popularInterestList = new ArrayList<>();
 
         movieList = HomePageActivity.movieDAO.getAllMovies();
 
         if (movieList != null && !movieList.isEmpty()) {
             homeBannerList.addAll(movieList);
             for (Movie movie : movieList) {
-                if (movie.getGenreId() == 5) {
-                    tvShowBannerList.add(movie);
+                if (movie.getGenreId() == 3 || movie.getGenreId() == 4 || movie.getGenreId() == 6) {
+                    entertainmentList.add(movie);
                 }
             }
             for (Movie movie : movieList) {
-                if (movie.getGenreId() == 7) {
-                    movieBannerList.add(movie);
+                if (movie.getGenreId() == 1 || movie.getGenreId() == 2 || movie.getGenreId() == 5 || movie.getGenreId() == 7) {
+                    popularInterestList.add(movie);
                 }
             }
-            for (Movie movie : movieList) {
-                if (movie.getGenreId() == 4) {
-                    animeBannerList.add(movie);
-                }
-            }
+
         } else {
             Toast.makeText(this, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show();
         }
         setMoviePagerAdapter(homeBannerList);
+
+
+        List<AllCategory> allCategoryList = new ArrayList<>();
+        List<AllCategory> entertainmentList = new ArrayList<>();
+        List<AllCategory> popularInterestList = new ArrayList<>();
+
+        String[] categoryNames = {"Kinh dị", "Hành động", "Hài", "Hoạt hình", "Viễn tưởng", "Lãng mạn", "Chiến tranh"};
+
+        for (int i = 1; i <= 7; i++) {
+            List<Movie> filteredMovies = new ArrayList<>();
+            for (Movie movie : movieList) {
+                if (movie.getGenreId() == i) {
+                    filteredMovies.add(movie);
+                }
+            }
+            AllCategory category = new AllCategory(i, categoryNames[i - 1], filteredMovies);
+
+            if (i == 3 || i == 4 || i == 6) {
+                entertainmentList.add(category);
+            }
+            if (i == 1 || i == 2 || i == 5 || i == 7) {
+                popularInterestList.add(category);
+            }
+            allCategoryList.add(category);
+        }
+        setMainRecycler(allCategoryList);
 
         categoryTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 1:
-                        setMoviePagerAdapter(tvShowBannerList);
+                        setMoviePagerAdapter(HomePageActivity.this.entertainmentList);
+                        setMainRecycler(entertainmentList);
                         return;
                     case 2 :
-                        setMoviePagerAdapter(movieBannerList);
-                        return;
-                    case 3 :
-                        setMoviePagerAdapter(animeBannerList);
+                        setMoviePagerAdapter(HomePageActivity.this.popularInterestList);
+                        setMainRecycler(popularInterestList);
                         return;
                     default:
                         setMoviePagerAdapter(homeBannerList);
+                        setMainRecycler(allCategoryList);
+
                 }
             }
             @Override
@@ -197,20 +215,6 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        List<AllCategory> allCategoryList = new ArrayList<>();
-        String[] categoryNames = {"Kinh dị", "Hành động", "Hài", "Hoạt hình", "Viễn tưởng", "Lãng mạn", "Chiến tranh"};
-
-        for (int i = 1; i <= 7; i++) {
-            List<Movie> filteredMovies = new ArrayList<>();
-            for (Movie movie : movieList) {
-                if (movie.getGenreId() == i) {
-                    filteredMovies.add(movie);
-                }
-            }
-            allCategoryList.add(new AllCategory(i, categoryNames[i - 1], filteredMovies));
-        }
-
-        setMainRecycler(allCategoryList);
     }
 
     private void setMoviePagerAdapter(List<Movie> bannerMoviesList) {
