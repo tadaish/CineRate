@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (validateLogin(username, password)) {
                     User user = userDAO.getUserByUsername(username);
                     if (user != null && PasswordUtils.verifyPassword(password, user.getPassword())) {
-                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Đăng nhâp thành công!", Toast.LENGTH_SHORT).show();
 
 
                         // Lưu ID người dùng vào SharedPreferences
@@ -69,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Please enter valid credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Hãy điền vào đúng thông tin", Toast.LENGTH_SHORT).show();
                 }
             }
         });

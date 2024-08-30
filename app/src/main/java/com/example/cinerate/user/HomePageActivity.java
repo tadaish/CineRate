@@ -40,11 +40,13 @@ public class HomePageActivity extends AppCompatActivity {
     Button logoutButton;
     SharedPreferences sharedPreferences;
     TextView welcomeTextView;
+    Button myListButton;
 
     List<Movie> homeBannerList;
     List<Movie> entertainmentList;
     List<Movie> popularInterestList;
     public static List<Movie> movieList;
+    private String currentUsername;
 
     public static MovieDAO movieDAO;
     public static GenreDAO genreDAO;
@@ -105,16 +107,21 @@ public class HomePageActivity extends AppCompatActivity {
         welcomeTextView = findViewById(R.id.welcomeTextView);
         logoutButton = findViewById(R.id.logoutButton);
         loginButton = findViewById(R.id.loginButton);
+        myListButton = findViewById(R.id.myListButton);
+
 
         updateUI();
-
+        // Xử lý login
         loginButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
             startActivity(intent);
         });
 
+
+        // Xử lý logout
         logoutButton.setOnClickListener(v -> {
-            // Xóa thông tin người dùng từ SharedPreferences
+
+            // Xóa dữ liệu đăng nhập trong SharedPreferences
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove("LoggedInUserId");
             editor.remove("LoggedInUserName");
@@ -125,6 +132,25 @@ public class HomePageActivity extends AppCompatActivity {
             Toast.makeText(HomePageActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
         });
 
+        currentUsername = sharedPreferences.getString("LoggedInUserName", null);
+
+        myListButton.setOnClickListener(v -> {
+            int userId = getLoggedInUserId();
+            String username = sharedPreferences.getString("LoggedInUserName", null);
+
+            if (userId != -1 && username != null) {
+                Intent intent = new Intent(HomePageActivity.this, WatchlistActivity.class);
+                intent.putExtra("currentUsername", username);
+                startActivity(intent);
+            } else {
+                Toast.makeText(HomePageActivity.this, "Vui lòng đăng nhập để truy cập MyList.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //mo CSDL
+        DatabaseManager.getInstance(this).open();
 
         //khoi tao cac lop Data-Acess-Object
         movieDAO = new MovieDAO(this);
@@ -161,7 +187,6 @@ public class HomePageActivity extends AppCompatActivity {
             Toast.makeText(this, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show();
         }
         setMoviePagerAdapter(homeBannerList);
-
 
         List<AllCategory> allCategoryList = new ArrayList<>();
         List<AllCategory> entertainmentList = new ArrayList<>();

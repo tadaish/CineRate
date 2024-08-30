@@ -1,17 +1,14 @@
 package com.example.cinerate.user;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,9 +46,9 @@ public class MovieDetails extends AppCompatActivity {
     String mName, mImage, mTrailerUrl, mDes, mCast, mPoster, mDirector;
 
     private User getLoggedInUser() {
-        int userId = getLoggedInUserId(); // Lấy ID của người dùng từ SharedPreferences
+        int userId = getLoggedInUserId();
         if (userId != -1) {
-            return userDAO.getUserId(userId); // Lấy thông tin người dùng từ UserDAO
+            return userDAO.getUserId(userId);
         }
         return null;
     }
@@ -66,6 +63,9 @@ public class MovieDetails extends AppCompatActivity {
         postCommentButton = findViewById(R.id.post_comment_button);
         commentRecyclerView = findViewById(R.id.comment_recycler_view);
         commentInput = findViewById(R.id.comment_input);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+      
         txtTitle = findViewById(R.id.txtTitle);
         txtDirector = findViewById(R.id.txtDirector);
         txtCast = findViewById(R.id.txtCast);
@@ -93,19 +93,16 @@ public class MovieDetails extends AppCompatActivity {
             }
         });
 
-
         commentDAO = new CommentDAO(this);
         userDAO = new UserDAO(this);
 
-        User loggedInUser = getLoggedInUser(); // Lấy thông tin người dùng đã đăng nhập
+        User loggedInUser = getLoggedInUser();
         if (loggedInUser != null) {
-            SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("LoggedInUserId", loggedInUser.getId()); // Lưu ID người dùng
+            editor.putInt("LoggedInUserId", loggedInUser.getId());
             editor.apply();
         }
 
-        // Load movie details and trailer
         mId = getIntent().getIntExtra("movieId", -1);
         mName = getIntent().getStringExtra("movieName");
         mTrailerUrl = getIntent().getStringExtra("trailerUrl");
@@ -129,23 +126,43 @@ public class MovieDetails extends AppCompatActivity {
 
         setupTrailerWebView(mTrailerUrl);
 
-        // Load comments for this movie
         loadComments();
 
-        // Post comment functionality
         postCommentButton.setOnClickListener(v -> {
-            int userId = getLoggedInUserId(); // Lấy ID của người dùng đăng nhập
+            int userId = getLoggedInUserId();
             String commentContent = commentInput.getText().toString().trim();
 
             if (userId != -1 && !TextUtils.isEmpty(commentContent)) {
-                Comment newComment = new Comment(0, mId, userId, commentContent, ""); // Bỏ qua created_at
+                Comment newComment = new Comment(0, mId, userId, commentContent, "");
                 commentDAO.addComment(newComment);
-                commentInput.setText(""); // Clear input field
-                loadComments(); // Reload comments
+                commentInput.setText("");
+                loadComments();
             } else {
                 Toast.makeText(this, "Please log in and enter a comment.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Intent intent = getIntent();
+        mId = intent.getIntExtra("movieId", -1);
+
+        int currentUserId = sharedPreferences.getInt("LoggedInUserId", -1);
+        String currentUsername = sharedPreferences.getString("LoggedInUserName", null);
+
+        if (currentUsername != null && currentUserId != -1) {
+            User currentUser = userDAO.getUserByUsername(currentUsername);
+            if (currentUser != null) {
+                Button watchListButton = findViewById(R.id.watch_list);
+                watchListButton.setOnClickListener(v -> {
+                    currentUser.addMovieToWatchlist(mId);
+                    userDAO.updateUser(currentUser);
+                    Toast.makeText(this, "Đã thêm vào Watchlist!", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                Toast.makeText(this, "Không tìm thấy người dùng.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Hãy đăng nhập trước.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadComments() {
