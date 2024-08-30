@@ -162,8 +162,6 @@ public class MovieDetails extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Không tìm thấy người dùng.", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(this, "Hãy đăng nhập trước.", Toast.LENGTH_SHORT).show();
         }
     }
 
