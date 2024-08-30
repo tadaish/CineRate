@@ -59,7 +59,7 @@ public class HomePageActivity extends AppCompatActivity {
     RecyclerView mainRecycler;
 
     private int getLoggedInUserId() {
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("LoggedInUserId", -1); // -1 nếu không tìm thấy ID
     }
 
@@ -102,7 +102,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.home_layout);
 
         userDAO = new UserDAO(this);
-        sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
 
         welcomeTextView = findViewById(R.id.welcomeTextView);
         logoutButton = findViewById(R.id.logoutButton);

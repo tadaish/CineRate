@@ -3,6 +3,7 @@ package com.example.cinerate.user;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.cinerate.R;
 import com.example.cinerate.daos.CommentDAO;
 import com.example.cinerate.daos.UserDAO;
@@ -36,9 +38,12 @@ public class MovieDetails extends AppCompatActivity {
     List<Comment> commentsList;
     CommentAdapter commentAdapter;
     public static UserDAO userDAO;
+    TextView txtTitle, txtDirector, txtLang, txtCast, txtDes, txtYear, toggleBtn;
+    ImageView moviePosterImageView;
 
-    Integer mId;
-    String mName, mImage, mTrailerUrl;
+
+    Integer mId, mYear;
+    String mName, mImage, mTrailerUrl, mDes, mCast, mPoster, mDirector;
 
     private User getLoggedInUser() {
         int userId = getLoggedInUserId();
@@ -58,7 +63,35 @@ public class MovieDetails extends AppCompatActivity {
         postCommentButton = findViewById(R.id.post_comment_button);
         commentRecyclerView = findViewById(R.id.comment_recycler_view);
         commentInput = findViewById(R.id.comment_input);
+
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+      
+        txtTitle = findViewById(R.id.txtTitle);
+        txtDirector = findViewById(R.id.txtDirector);
+        txtCast = findViewById(R.id.txtCast);
+        txtDes = findViewById(R.id.txtDescription);
+        txtYear = findViewById(R.id.txtYear);
+        moviePosterImageView = findViewById(R.id.moviePosterImageView);
+        toggleBtn = findViewById(R.id.toggleBtn);
+
+        toggleBtn.setOnClickListener(new View.OnClickListener() {
+            private boolean isExpanded = false;
+            @Override
+            public void onClick(View view) {
+                if (isExpanded) {
+                    // Thu gọn nội dung
+                    txtDes.setMaxLines(3);
+                    txtDes.setEllipsize(TextUtils.TruncateAt.END);
+                    toggleBtn.setText("Xem thêm");
+                } else {
+                    // Mở rộng nội dung
+                    txtDes.setMaxLines(Integer.MAX_VALUE);
+                    txtDes.setEllipsize(null);
+                    toggleBtn.setText("Thu gọn");
+                }
+                isExpanded = !isExpanded;
+            }
+        });
 
         commentDAO = new CommentDAO(this);
         userDAO = new UserDAO(this);
@@ -72,8 +105,24 @@ public class MovieDetails extends AppCompatActivity {
 
         mId = getIntent().getIntExtra("movieId", -1);
         mName = getIntent().getStringExtra("movieName");
-        mImage = getIntent().getStringExtra("poster_url");
         mTrailerUrl = getIntent().getStringExtra("trailerUrl");
+        mPoster = getIntent().getStringExtra("poster_url");
+        mYear = getIntent().getIntExtra("releaseYear", -1);
+        mDes = getIntent().getStringExtra("movieDes");
+        mCast = getIntent().getStringExtra("movieCast");
+        mDirector = getIntent().getStringExtra("movieDirector");
+
+        txtTitle.setText(mName);
+        txtDirector.setText(mDirector);
+        txtCast.setText(mCast);
+        txtYear.setText(String.valueOf(mYear));
+        txtDes.setText(mDes);
+
+
+        Glide.with(this)
+                .load(mPoster)
+                .centerCrop()
+                .into(moviePosterImageView);
 
         setupTrailerWebView(mTrailerUrl);
 
@@ -124,7 +173,7 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     private int getLoggedInUserId() {
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
         return sharedPreferences.getInt("LoggedInUserId", -1);
     }
 

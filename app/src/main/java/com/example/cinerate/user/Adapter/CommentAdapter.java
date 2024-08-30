@@ -7,6 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.cinerate.R;
 import com.example.cinerate.models.Comment;
+import com.example.cinerate.models.Genre;
+import com.example.cinerate.models.User;
+import com.example.cinerate.user.HomePageActivity;
+
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
@@ -27,7 +31,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = commentList.get(position);
         holder.commentContent.setText(comment.getContent());
-        holder.commentAuthor.setText("User ID: " + comment.getUser_id());
+
+        User u = HomePageActivity.userDAO.getUserId(comment.getUser_id());
+        holder.commentAuthor.setText(u.getUsername());
+
     }
 
     @Override

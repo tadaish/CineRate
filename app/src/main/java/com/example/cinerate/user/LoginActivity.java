@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,21 +46,27 @@ public class LoginActivity extends AppCompatActivity {
                     if (user != null && PasswordUtils.verifyPassword(password, user.getPassword())) {
                         Toast.makeText(LoginActivity.this, "Đăng nhâp thành công!", Toast.LENGTH_SHORT).show();
 
-                        // Lưu ID người dùng vào SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("LoggedInUserId", user.getId());
-                        editor.putString("LoggedInUserName", user.getUsername());
-                        editor.apply();
 
-                        if ("admin".equalsIgnoreCase(user.getRole())) {
-                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
-                            startActivity(intent);
-                        } else {
+                        // Lưu ID người dùng vào SharedPreferences
+                        if(user.getRole().equals("user")){
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserAppPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("LoggedInUserId", user.getId());
+                            editor.putString("LoggedInUserName", user.getUsername());
+                            editor.apply();
+
                             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
                             startActivity(intent);
-                        }
+                        }else{
+                            SharedPreferences adminSharedPref = getSharedPreferences("AdminAppPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = adminSharedPref.edit();
+                            editor.putInt("LoggedInAdminId", user.getId());
+                            editor.putString("LoggedInAdminName", user.getUsername());
+                            editor.apply();
 
+                            Intent intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                            startActivity(intent);
+                        }
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
@@ -69,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        Button registerButton = findViewById(R.id.registerButton);
+        TextView registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
